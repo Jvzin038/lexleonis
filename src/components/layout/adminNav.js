@@ -1,4 +1,5 @@
 import {
+  Bot,
   BarChart3,
   CalendarDays,
   CheckCircle2,
@@ -20,6 +21,7 @@ import {
 
 export const ADMIN_NAV = [
   { label: 'Dashboard', path: '/painel', icon: LayoutDashboard, permission: 'dashboard' },
+  { label: 'Assistente de IA', path: '/painel/assistente', icon: Bot, permission: 'dashboard' },
   { label: 'Personalizar site', path: '/painel/site', icon: Palette, permission: 'personalizar' },
   { label: 'Páginas e menus', path: '/painel/paginas', icon: Sparkles, permission: 'paginas' },
   { label: 'Eventos', path: '/painel/eventos', icon: CalendarDays, permission: 'eventos' },
