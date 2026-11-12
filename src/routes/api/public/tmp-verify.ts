@@ -16,6 +16,14 @@ export const Route = createFileRoute("/api/public/tmp-verify")({
       await supabaseAdmin.from("registration").insert(body.reg);
       return Response.json({ ok: true });
     }
+    if (body.op === "insert") {
+      const { data, error } = await supabaseAdmin.from(body.table).insert(body.row).select().single();
+      return Response.json(error ? { error: error.message } : data);
+    }
+    if (body.op === "update") {
+      const { data, error } = await supabaseAdmin.from(body.table).update(body.row).eq("id", body.id).select().single();
+      return Response.json(error ? { error: error.message } : data);
+    }
     if (body.op === "read") {
       const { data } = await supabaseAdmin.from(body.table).select("*").limit(20);
       return Response.json(data);
