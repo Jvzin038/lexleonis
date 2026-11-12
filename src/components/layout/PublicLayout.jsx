@@ -7,7 +7,7 @@ import SiteHeader from './SiteHeader';
 import SiteFooter from './SiteFooter';
 import MaintenanceNotice from './MaintenanceNotice';
 
-export default function PublicLayout({ children }) {
+export default function PublicLayout({ children = null }) {
   const { settings } = useSite();
   const { isStaff } = useStaff();
   const [legalPages, setLegalPages] = useState([]);

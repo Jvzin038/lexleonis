@@ -139,7 +139,10 @@ export const base44 = {
   },
   functions: {
     async invoke(name, payload) {
-      const res = await invokeAction({ data: { name, payload } });
+      const raw = await invokeAction({ data: { name, payload } });
+      let parsed = null;
+      try { parsed = raw.body ? JSON.parse(raw.body) : null; } catch { parsed = { raw: raw.body }; }
+      const res = { status: raw.status, data: parsed };
       if (res.status >= 400) {
         const err = new Error(res.data?.error || 'Não foi possível concluir a ação.');
         err.status = res.status;

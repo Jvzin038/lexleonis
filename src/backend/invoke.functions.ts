@@ -10,12 +10,10 @@ export const invokeAction = createServerFn({ method: "POST" })
   )
   .handler(async ({ data }) => {
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    // @ts-expect-error untyped JS module
     const { FUNCTIONS } = await import("./b44/registry.js");
-    // @ts-expect-error untyped JS module
     const { bindRequestContext, loadUser } = await import("./b44/sdk.js");
-    const fn = FUNCTIONS[data.name];
-    if (!fn) return { status: 404, data: { error: "Ação não encontrada." } };
+    const fn = (FUNCTIONS as Record<string, (req: Request) => Promise<Response>>)[data.name];
+    if (!fn) return { status: 404, body: JSON.stringify({ error: "Ação não encontrada." }) };
 
     const request = getRequest();
     const authHeader = request?.headers.get("authorization") || "";
@@ -38,8 +36,6 @@ export const invokeAction = createServerFn({ method: "POST" })
     });
     bindRequestContext(req, { admin: supabaseAdmin, user, origin });
     const res: Response = await fn(req);
-    const text = await res.text();
-    let body: unknown = null;
-    try { body = text ? JSON.parse(text) : null; } catch { body = { raw: text }; }
-    return { status: res.status, data: body as Record<string, unknown> };
+    // Returned as text so any JSON shape the action produces passes through unchanged.
+    return { status: res.status, body: await res.text() };
   });
