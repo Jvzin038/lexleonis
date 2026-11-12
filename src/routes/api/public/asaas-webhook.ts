@@ -7,9 +7,9 @@ export const Route = createFileRoute("/api/public/asaas-webhook")({
       POST: async ({ request }) => {
         const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
         // @ts-expect-error untyped JS module
-        const { bindRequestContext } = await import("@/server/b44/sdk.js");
+        const { bindRequestContext } = await import("@/backend/b44/sdk.js");
         // @ts-expect-error untyped JS module
-        const { default: handler } = await import("@/server/b44/functions/asaasWebhook.js");
+        const { default: handler } = await import("@/backend/b44/functions/asaasWebhook.js");
         bindRequestContext(request, { admin: supabaseAdmin, user: null, origin: new URL(request.url).origin });
         return handler(request);
       },

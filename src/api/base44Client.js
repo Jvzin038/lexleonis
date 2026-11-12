@@ -3,8 +3,8 @@
 import { supabase } from '@/integrations/supabase/client';
 import { lovable } from '@/integrations/lovable/index';
 import { ENTITY_TABLES, createEntity } from '@/lib/entity-core';
-import { invokeAction } from '@/server/invoke.functions';
-import { claimLegacyAccount } from '@/server/account.functions';
+import { invokeAction } from '@/backend/invoke.functions';
+import { claimLegacyAccount } from '@/backend/account.functions';
 
 let claimed = false;
 
