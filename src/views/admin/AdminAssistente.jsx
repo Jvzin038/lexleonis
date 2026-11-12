@@ -1,7 +1,8 @@
 import React, { useRef, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Copy, Square, Wand2 } from 'lucide-react';
-import { toast } from 'sonner';
+import { toast as notify } from '@/components/ui/use-toast';
+const toast = { success: (m) => notify({ title: m }), error: (m) => notify({ title: m, variant: 'destructive' }) };
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { streamAi } from '@/components/ai/streamAi';

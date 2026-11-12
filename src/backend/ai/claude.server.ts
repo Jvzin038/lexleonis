@@ -9,7 +9,7 @@ export async function streamClaude(opts: { system: string; messages: ChatMsg[]; 
   if (!key) return Response.json({ error: "Assistente de IA não configurado." }, { status: 500 });
   const upstream = await fetch(GATEWAY, {
     method: "POST",
-    signal: opts.signal,
+    signal: opts.signal ?? null,
     headers: { "content-type": "application/json", authorization: `Bearer ${key}`, "X-Lovable-AIG-SDK": "fetch" },
     body: JSON.stringify({
       model: CLAUDE_MODEL,
