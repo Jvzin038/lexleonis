@@ -23,7 +23,7 @@ function applyFilter(q, filter) {
     if (value === null) { q = q.is(key, null); continue; }
     if (typeof value === 'object' && !Array.isArray(value)) {
       for (const [op, v] of Object.entries(value)) {
-        if (op === '$ne') q = v === null ? q.not(key, 'is', null) : q.or(`${key}.neq.${v},${key}.is.null`);
+        if (op === '$ne') q = v === null ? q.not(key, 'is', null) : q.neq(key, v);
         else if (op === '$in') q = q.in(key, v);
         else if (op === '$nin') q = q.not(key, 'in', `(${v.map((x) => `"${x}"`).join(',')})`);
         else if (op === '$gte') q = q.gte(key, v);
