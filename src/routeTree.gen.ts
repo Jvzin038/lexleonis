@@ -33,7 +33,7 @@ import { Route as PublicPatrocinadoresRouteImport } from './routes/_public/patro
 import { Route as PublicSejaPatrocinadorRouteImport } from './routes/_public/seja-patrocinador'
 import { Route as StudentMeusIngressosRouteImport } from './routes/_student.meus-ingressos'
 import { Route as StudentMinhaAreaRouteImport } from './routes/_student.minha-area'
-import { Route as AdminEntrarRouteImport } from './routes/admin.entrar'
+import { Route as AdminEntrarRouteImport } from './routes/admin_.entrar'
 import { Route as PainelIndexRouteImport } from './routes/painel/index'
 import { Route as PainelCheckinRouteImport } from './routes/painel/checkin'
 import { Route as PainelConfiguracoesRouteImport } from './routes/painel/configuracoes'
@@ -54,11 +54,11 @@ import { Route as PainelPedidosRouteImport } from './routes/painel/pedidos'
 import { Route as PainelSiteRouteImport } from './routes/painel/site'
 import { Route as PainelUsuariosRouteImport } from './routes/painel/usuarios'
 import { Route as PainelEntrarRouteImport } from './routes/painel_.entrar'
-import { Route as PublicEsportesIdRouteImport } from './routes/_public/esportes.$id'
-import { Route as PublicEventosIdRouteImport } from './routes/_public/eventos.$id'
-import { Route as PublicLojaIdRouteImport } from './routes/_public/loja.$id'
-import { Route as PublicMomentosIdRouteImport } from './routes/_public/momentos.$id'
-import { Route as PublicNoticiasIdRouteImport } from './routes/_public/noticias.$id'
+import { Route as PublicEsportesIdRouteImport } from './routes/_public/esportes_.$id'
+import { Route as PublicEventosIdRouteImport } from './routes/_public/eventos_.$id'
+import { Route as PublicLojaIdRouteImport } from './routes/_public/loja_.$id'
+import { Route as PublicMomentosIdRouteImport } from './routes/_public/momentos_.$id'
+import { Route as PublicNoticiasIdRouteImport } from './routes/_public/noticias_.$id'
 import { Route as PublicPaginaSlugRouteImport } from './routes/_public/pagina.$slug'
 import { Route as ApiPublicAsaasWebhookRouteImport } from './routes/api/public/asaas-webhook'
 import { Route as ApiPublicFilesSplatRouteImport } from './routes/api/public/files.$'
@@ -182,9 +182,9 @@ const StudentMinhaAreaRoute = StudentMinhaAreaRouteImport.update({
   getParentRoute: () => StudentRoute,
 } as any)
 const AdminEntrarRoute = AdminEntrarRouteImport.update({
-  id: '/entrar',
-  path: '/entrar',
-  getParentRoute: () => AdminRoute,
+  id: '/admin_/entrar',
+  path: '/admin/entrar',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const PainelIndexRoute = PainelIndexRouteImport.update({
   id: '/',
@@ -287,29 +287,29 @@ const PainelEntrarRoute = PainelEntrarRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const PublicEsportesIdRoute = PublicEsportesIdRouteImport.update({
-  id: '/$id',
-  path: '/$id',
-  getParentRoute: () => PublicEsportesRoute,
+  id: '/esportes_/$id',
+  path: '/esportes/$id',
+  getParentRoute: () => PublicRoute,
 } as any)
 const PublicEventosIdRoute = PublicEventosIdRouteImport.update({
-  id: '/$id',
-  path: '/$id',
-  getParentRoute: () => PublicEventosRoute,
+  id: '/eventos_/$id',
+  path: '/eventos/$id',
+  getParentRoute: () => PublicRoute,
 } as any)
 const PublicLojaIdRoute = PublicLojaIdRouteImport.update({
-  id: '/$id',
-  path: '/$id',
-  getParentRoute: () => PublicLojaRoute,
+  id: '/loja_/$id',
+  path: '/loja/$id',
+  getParentRoute: () => PublicRoute,
 } as any)
 const PublicMomentosIdRoute = PublicMomentosIdRouteImport.update({
-  id: '/$id',
-  path: '/$id',
-  getParentRoute: () => PublicMomentosRoute,
+  id: '/momentos_/$id',
+  path: '/momentos/$id',
+  getParentRoute: () => PublicRoute,
 } as any)
 const PublicNoticiasIdRoute = PublicNoticiasIdRouteImport.update({
-  id: '/$id',
-  path: '/$id',
-  getParentRoute: () => PublicNoticiasRoute,
+  id: '/noticias_/$id',
+  path: '/noticias/$id',
+  getParentRoute: () => PublicRoute,
 } as any)
 const PublicPaginaSlugRoute = PublicPaginaSlugRouteImport.update({
   id: '/pagina/$slug',
@@ -329,7 +329,7 @@ const ApiPublicFilesSplatRoute = ApiPublicFilesSplatRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/admin': typeof AdminRouteWithChildren
+  '/admin': typeof AdminRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
   '/painel': typeof PainelRouteWithChildren
@@ -340,12 +340,12 @@ export interface FileRoutesByFullPath {
   '/calendario': typeof PublicCalendarioRoute
   '/carrinho': typeof PublicCarrinhoRoute
   '/contato': typeof PublicContatoRoute
-  '/esportes': typeof PublicEsportesRouteWithChildren
-  '/eventos': typeof PublicEventosRouteWithChildren
+  '/esportes': typeof PublicEsportesRoute
+  '/eventos': typeof PublicEventosRoute
   '/faq': typeof PublicFaqRoute
-  '/loja': typeof PublicLojaRouteWithChildren
-  '/momentos': typeof PublicMomentosRouteWithChildren
-  '/noticias': typeof PublicNoticiasRouteWithChildren
+  '/loja': typeof PublicLojaRoute
+  '/momentos': typeof PublicMomentosRoute
+  '/noticias': typeof PublicNoticiasRoute
   '/patrocinadores': typeof PublicPatrocinadoresRoute
   '/seja-patrocinador': typeof PublicSejaPatrocinadorRoute
   '/meus-ingressos': typeof StudentMeusIngressosRoute
@@ -382,7 +382,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/admin': typeof AdminRouteWithChildren
+  '/admin': typeof AdminRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
@@ -392,12 +392,12 @@ export interface FileRoutesByTo {
   '/calendario': typeof PublicCalendarioRoute
   '/carrinho': typeof PublicCarrinhoRoute
   '/contato': typeof PublicContatoRoute
-  '/esportes': typeof PublicEsportesRouteWithChildren
-  '/eventos': typeof PublicEventosRouteWithChildren
+  '/esportes': typeof PublicEsportesRoute
+  '/eventos': typeof PublicEventosRoute
   '/faq': typeof PublicFaqRoute
-  '/loja': typeof PublicLojaRouteWithChildren
-  '/momentos': typeof PublicMomentosRouteWithChildren
-  '/noticias': typeof PublicNoticiasRouteWithChildren
+  '/loja': typeof PublicLojaRoute
+  '/momentos': typeof PublicMomentosRoute
+  '/noticias': typeof PublicNoticiasRoute
   '/patrocinadores': typeof PublicPatrocinadoresRoute
   '/seja-patrocinador': typeof PublicSejaPatrocinadorRoute
   '/meus-ingressos': typeof StudentMeusIngressosRoute
@@ -437,7 +437,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_public': typeof PublicRouteWithChildren
   '/_student': typeof StudentRouteWithChildren
-  '/admin': typeof AdminRouteWithChildren
+  '/admin': typeof AdminRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
   '/painel': typeof PainelRouteWithChildren
@@ -448,17 +448,17 @@ export interface FileRoutesById {
   '/_public/calendario': typeof PublicCalendarioRoute
   '/_public/carrinho': typeof PublicCarrinhoRoute
   '/_public/contato': typeof PublicContatoRoute
-  '/_public/esportes': typeof PublicEsportesRouteWithChildren
-  '/_public/eventos': typeof PublicEventosRouteWithChildren
+  '/_public/esportes': typeof PublicEsportesRoute
+  '/_public/eventos': typeof PublicEventosRoute
   '/_public/faq': typeof PublicFaqRoute
-  '/_public/loja': typeof PublicLojaRouteWithChildren
-  '/_public/momentos': typeof PublicMomentosRouteWithChildren
-  '/_public/noticias': typeof PublicNoticiasRouteWithChildren
+  '/_public/loja': typeof PublicLojaRoute
+  '/_public/momentos': typeof PublicMomentosRoute
+  '/_public/noticias': typeof PublicNoticiasRoute
   '/_public/patrocinadores': typeof PublicPatrocinadoresRoute
   '/_public/seja-patrocinador': typeof PublicSejaPatrocinadorRoute
   '/_student/meus-ingressos': typeof StudentMeusIngressosRoute
   '/_student/minha-area': typeof StudentMinhaAreaRoute
-  '/admin/entrar': typeof AdminEntrarRoute
+  '/admin_/entrar': typeof AdminEntrarRoute
   '/painel/checkin': typeof PainelCheckinRoute
   '/painel/configuracoes': typeof PainelConfiguracoesRoute
   '/painel/diretoria': typeof PainelDiretoriaRoute
@@ -479,11 +479,11 @@ export interface FileRoutesById {
   '/painel/usuarios': typeof PainelUsuariosRoute
   '/painel_/entrar': typeof PainelEntrarRoute
   '/painel/': typeof PainelIndexRoute
-  '/_public/esportes/$id': typeof PublicEsportesIdRoute
-  '/_public/eventos/$id': typeof PublicEventosIdRoute
-  '/_public/loja/$id': typeof PublicLojaIdRoute
-  '/_public/momentos/$id': typeof PublicMomentosIdRoute
-  '/_public/noticias/$id': typeof PublicNoticiasIdRoute
+  '/_public/esportes_/$id': typeof PublicEsportesIdRoute
+  '/_public/eventos_/$id': typeof PublicEventosIdRoute
+  '/_public/loja_/$id': typeof PublicLojaIdRoute
+  '/_public/momentos_/$id': typeof PublicMomentosIdRoute
+  '/_public/noticias_/$id': typeof PublicNoticiasIdRoute
   '/_public/pagina/$slug': typeof PublicPaginaSlugRoute
   '/api/public/asaas-webhook': typeof ApiPublicAsaasWebhookRoute
   '/api/public/files/$': typeof ApiPublicFilesSplatRoute
@@ -620,7 +620,7 @@ export interface FileRouteTypes {
     | '/_public/seja-patrocinador'
     | '/_student/meus-ingressos'
     | '/_student/minha-area'
-    | '/admin/entrar'
+    | '/admin_/entrar'
     | '/painel/checkin'
     | '/painel/configuracoes'
     | '/painel/diretoria'
@@ -641,11 +641,11 @@ export interface FileRouteTypes {
     | '/painel/usuarios'
     | '/painel_/entrar'
     | '/painel/'
-    | '/_public/esportes/$id'
-    | '/_public/eventos/$id'
-    | '/_public/loja/$id'
-    | '/_public/momentos/$id'
-    | '/_public/noticias/$id'
+    | '/_public/esportes_/$id'
+    | '/_public/eventos_/$id'
+    | '/_public/loja_/$id'
+    | '/_public/momentos_/$id'
+    | '/_public/noticias_/$id'
     | '/_public/pagina/$slug'
     | '/api/public/asaas-webhook'
     | '/api/public/files/$'
@@ -655,12 +655,13 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   PublicRoute: typeof PublicRouteWithChildren
   StudentRoute: typeof StudentRouteWithChildren
-  AdminRoute: typeof AdminRouteWithChildren
+  AdminRoute: typeof AdminRoute
   ForgotPasswordRoute: typeof ForgotPasswordRoute
   LoginRoute: typeof LoginRoute
   PainelRoute: typeof PainelRouteWithChildren
   RegisterRoute: typeof RegisterRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
+  AdminEntrarRoute: typeof AdminEntrarRoute
   PainelEntrarRoute: typeof PainelEntrarRoute
   ApiPublicAsaasWebhookRoute: typeof ApiPublicAsaasWebhookRoute
   ApiPublicFilesSplatRoute: typeof ApiPublicFilesSplatRoute
@@ -836,12 +837,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StudentMinhaAreaRouteImport
       parentRoute: typeof StudentRoute
     }
-    '/admin/entrar': {
-      id: '/admin/entrar'
-      path: '/entrar'
+    '/admin_/entrar': {
+      id: '/admin_/entrar'
+      path: '/admin/entrar'
       fullPath: '/admin/entrar'
       preLoaderRoute: typeof AdminEntrarRouteImport
-      parentRoute: typeof AdminRoute
+      parentRoute: typeof rootRouteImport
     }
     '/painel/': {
       id: '/painel/'
@@ -983,40 +984,40 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PainelEntrarRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_public/esportes/$id': {
-      id: '/_public/esportes/$id'
-      path: '/$id'
+    '/_public/esportes_/$id': {
+      id: '/_public/esportes_/$id'
+      path: '/esportes/$id'
       fullPath: '/esportes/$id'
       preLoaderRoute: typeof PublicEsportesIdRouteImport
-      parentRoute: typeof PublicEsportesRoute
+      parentRoute: typeof PublicRoute
     }
-    '/_public/eventos/$id': {
-      id: '/_public/eventos/$id'
-      path: '/$id'
+    '/_public/eventos_/$id': {
+      id: '/_public/eventos_/$id'
+      path: '/eventos/$id'
       fullPath: '/eventos/$id'
       preLoaderRoute: typeof PublicEventosIdRouteImport
-      parentRoute: typeof PublicEventosRoute
+      parentRoute: typeof PublicRoute
     }
-    '/_public/loja/$id': {
-      id: '/_public/loja/$id'
-      path: '/$id'
+    '/_public/loja_/$id': {
+      id: '/_public/loja_/$id'
+      path: '/loja/$id'
       fullPath: '/loja/$id'
       preLoaderRoute: typeof PublicLojaIdRouteImport
-      parentRoute: typeof PublicLojaRoute
+      parentRoute: typeof PublicRoute
     }
-    '/_public/momentos/$id': {
-      id: '/_public/momentos/$id'
-      path: '/$id'
+    '/_public/momentos_/$id': {
+      id: '/_public/momentos_/$id'
+      path: '/momentos/$id'
       fullPath: '/momentos/$id'
       preLoaderRoute: typeof PublicMomentosIdRouteImport
-      parentRoute: typeof PublicMomentosRoute
+      parentRoute: typeof PublicRoute
     }
-    '/_public/noticias/$id': {
-      id: '/_public/noticias/$id'
-      path: '/$id'
+    '/_public/noticias_/$id': {
+      id: '/_public/noticias_/$id'
+      path: '/noticias/$id'
       fullPath: '/noticias/$id'
       preLoaderRoute: typeof PublicNoticiasIdRouteImport
-      parentRoute: typeof PublicNoticiasRoute
+      parentRoute: typeof PublicRoute
     }
     '/_public/pagina/$slug': {
       id: '/_public/pagina/$slug'
@@ -1042,80 +1043,25 @@ declare module '@tanstack/react-router' {
   }
 }
 
-interface PublicEsportesRouteChildren {
-  PublicEsportesIdRoute: typeof PublicEsportesIdRoute
-}
-
-const PublicEsportesRouteChildren: PublicEsportesRouteChildren = {
-  PublicEsportesIdRoute: PublicEsportesIdRoute,
-}
-
-const PublicEsportesRouteWithChildren = PublicEsportesRoute._addFileChildren(
-  PublicEsportesRouteChildren,
-)
-
-interface PublicEventosRouteChildren {
-  PublicEventosIdRoute: typeof PublicEventosIdRoute
-}
-
-const PublicEventosRouteChildren: PublicEventosRouteChildren = {
-  PublicEventosIdRoute: PublicEventosIdRoute,
-}
-
-const PublicEventosRouteWithChildren = PublicEventosRoute._addFileChildren(
-  PublicEventosRouteChildren,
-)
-
-interface PublicLojaRouteChildren {
-  PublicLojaIdRoute: typeof PublicLojaIdRoute
-}
-
-const PublicLojaRouteChildren: PublicLojaRouteChildren = {
-  PublicLojaIdRoute: PublicLojaIdRoute,
-}
-
-const PublicLojaRouteWithChildren = PublicLojaRoute._addFileChildren(
-  PublicLojaRouteChildren,
-)
-
-interface PublicMomentosRouteChildren {
-  PublicMomentosIdRoute: typeof PublicMomentosIdRoute
-}
-
-const PublicMomentosRouteChildren: PublicMomentosRouteChildren = {
-  PublicMomentosIdRoute: PublicMomentosIdRoute,
-}
-
-const PublicMomentosRouteWithChildren = PublicMomentosRoute._addFileChildren(
-  PublicMomentosRouteChildren,
-)
-
-interface PublicNoticiasRouteChildren {
-  PublicNoticiasIdRoute: typeof PublicNoticiasIdRoute
-}
-
-const PublicNoticiasRouteChildren: PublicNoticiasRouteChildren = {
-  PublicNoticiasIdRoute: PublicNoticiasIdRoute,
-}
-
-const PublicNoticiasRouteWithChildren = PublicNoticiasRoute._addFileChildren(
-  PublicNoticiasRouteChildren,
-)
-
 interface PublicRouteChildren {
   PublicAtleticaRoute: typeof PublicAtleticaRoute
   PublicBuscaRoute: typeof PublicBuscaRoute
   PublicCalendarioRoute: typeof PublicCalendarioRoute
   PublicCarrinhoRoute: typeof PublicCarrinhoRoute
   PublicContatoRoute: typeof PublicContatoRoute
-  PublicEsportesRoute: typeof PublicEsportesRouteWithChildren
-  PublicEventosRoute: typeof PublicEventosRouteWithChildren
+  PublicEsportesRoute: typeof PublicEsportesRoute
+  PublicEventosRoute: typeof PublicEventosRoute
   PublicFaqRoute: typeof PublicFaqRoute
-  PublicLojaRoute: typeof PublicLojaRouteWithChildren
-  PublicMomentosRoute: typeof PublicMomentosRouteWithChildren
-  PublicNoticiasRoute: typeof PublicNoticiasRouteWithChildren
+  PublicLojaRoute: typeof PublicLojaRoute
+  PublicMomentosRoute: typeof PublicMomentosRoute
+  PublicNoticiasRoute: typeof PublicNoticiasRoute
   PublicPatrocinadoresRoute: typeof PublicPatrocinadoresRoute
   PublicSejaPatrocinadorRoute: typeof PublicSejaPatrocinadorRoute
+  PublicEsportesIdRoute: typeof PublicEsportesIdRoute
+  PublicEventosIdRoute: typeof PublicEventosIdRoute
+  PublicLojaIdRoute: typeof PublicLojaIdRoute
+  PublicMomentosIdRoute: typeof PublicMomentosIdRoute
+  PublicNoticiasIdRoute: typeof PublicNoticiasIdRoute
   PublicPaginaSlugRoute: typeof PublicPaginaSlugRoute
 }
 
@@ -1125,14 +1071,19 @@ const PublicRouteChildren: PublicRouteChildren = {
   PublicCalendarioRoute: PublicCalendarioRoute,
   PublicCarrinhoRoute: PublicCarrinhoRoute,
   PublicContatoRoute: PublicContatoRoute,
-  PublicEsportesRoute: PublicEsportesRouteWithChildren,
-  PublicEventosRoute: PublicEventosRouteWithChildren,
+  PublicEsportesRoute: PublicEsportesRoute,
+  PublicEventosRoute: PublicEventosRoute,
   PublicFaqRoute: PublicFaqRoute,
-  PublicLojaRoute: PublicLojaRouteWithChildren,
-  PublicMomentosRoute: PublicMomentosRouteWithChildren,
-  PublicNoticiasRoute: PublicNoticiasRouteWithChildren,
+  PublicLojaRoute: PublicLojaRoute,
+  PublicMomentosRoute: PublicMomentosRoute,
+  PublicNoticiasRoute: PublicNoticiasRoute,
   PublicPatrocinadoresRoute: PublicPatrocinadoresRoute,
   PublicSejaPatrocinadorRoute: PublicSejaPatrocinadorRoute,
+  PublicEsportesIdRoute: PublicEsportesIdRoute,
+  PublicEventosIdRoute: PublicEventosIdRoute,
+  PublicLojaIdRoute: PublicLojaIdRoute,
+  PublicMomentosIdRoute: PublicMomentosIdRoute,
+  PublicNoticiasIdRoute: PublicNoticiasIdRoute,
   PublicPaginaSlugRoute: PublicPaginaSlugRoute,
 }
 
@@ -1151,16 +1102,6 @@ const StudentRouteChildren: StudentRouteChildren = {
 
 const StudentRouteWithChildren =
   StudentRoute._addFileChildren(StudentRouteChildren)
-
-interface AdminRouteChildren {
-  AdminEntrarRoute: typeof AdminEntrarRoute
-}
-
-const AdminRouteChildren: AdminRouteChildren = {
-  AdminEntrarRoute: AdminEntrarRoute,
-}
-
-const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 
 interface PainelRouteChildren {
   PainelCheckinRoute: typeof PainelCheckinRoute
@@ -1213,12 +1154,13 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   PublicRoute: PublicRouteWithChildren,
   StudentRoute: StudentRouteWithChildren,
-  AdminRoute: AdminRouteWithChildren,
+  AdminRoute: AdminRoute,
   ForgotPasswordRoute: ForgotPasswordRoute,
   LoginRoute: LoginRoute,
   PainelRoute: PainelRouteWithChildren,
   RegisterRoute: RegisterRoute,
   ResetPasswordRoute: ResetPasswordRoute,
+  AdminEntrarRoute: AdminEntrarRoute,
   PainelEntrarRoute: PainelEntrarRoute,
   ApiPublicAsaasWebhookRoute: ApiPublicAsaasWebhookRoute,
   ApiPublicFilesSplatRoute: ApiPublicFilesSplatRoute,
