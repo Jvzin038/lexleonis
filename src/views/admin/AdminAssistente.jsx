@@ -15,7 +15,7 @@ function Output({ text, busy }) {
         <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">{busy ? 'Escrevendo…' : 'Resultado'}</p>
         {!busy && text && <Button variant="outline" size="sm" className="rounded-full" onClick={() => { navigator.clipboard.writeText(text); toast.success('Texto copiado.'); }}><Copy className="mr-1 h-3.5 w-3.5" />Copiar</Button>}
       </div>
-      <div className="prose prose-sm max-w-none"><ReactMarkdown>{text || '…'}</ReactMarkdown></div>
+      <div className="ai-prose"><ReactMarkdown>{text || '…'}</ReactMarkdown></div>
     </div>
   );
 }

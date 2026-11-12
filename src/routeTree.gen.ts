@@ -35,6 +35,7 @@ import { Route as StudentMeusIngressosRouteImport } from './routes/_student.meus
 import { Route as StudentMinhaAreaRouteImport } from './routes/_student.minha-area'
 import { Route as AdminEntrarRouteImport } from './routes/admin_.entrar'
 import { Route as PainelIndexRouteImport } from './routes/painel/index'
+import { Route as PainelAssistenteRouteImport } from './routes/painel/assistente'
 import { Route as PainelCheckinRouteImport } from './routes/painel/checkin'
 import { Route as PainelConfiguracoesRouteImport } from './routes/painel/configuracoes'
 import { Route as PainelDiretoriaRouteImport } from './routes/painel/diretoria'
@@ -60,6 +61,7 @@ import { Route as PublicLojaIdRouteImport } from './routes/_public/loja_.$id'
 import { Route as PublicMomentosIdRouteImport } from './routes/_public/momentos_.$id'
 import { Route as PublicNoticiasIdRouteImport } from './routes/_public/noticias_.$id'
 import { Route as PublicPaginaSlugRouteImport } from './routes/_public/pagina.$slug'
+import { Route as ApiPublicAiRouteImport } from './routes/api/public/ai'
 import { Route as ApiPublicAsaasWebhookRouteImport } from './routes/api/public/asaas-webhook'
 import { Route as ApiPublicFilesSplatRouteImport } from './routes/api/public/files.$'
 
@@ -191,6 +193,11 @@ const PainelIndexRoute = PainelIndexRouteImport.update({
   path: '/',
   getParentRoute: () => PainelRoute,
 } as any)
+const PainelAssistenteRoute = PainelAssistenteRouteImport.update({
+  id: '/assistente',
+  path: '/assistente',
+  getParentRoute: () => PainelRoute,
+} as any)
 const PainelCheckinRoute = PainelCheckinRouteImport.update({
   id: '/checkin',
   path: '/checkin',
@@ -316,6 +323,11 @@ const PublicPaginaSlugRoute = PublicPaginaSlugRouteImport.update({
   path: '/pagina/$slug',
   getParentRoute: () => PublicRoute,
 } as any)
+const ApiPublicAiRoute = ApiPublicAiRouteImport.update({
+  id: '/api/public/ai',
+  path: '/api/public/ai',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicAsaasWebhookRoute = ApiPublicAsaasWebhookRouteImport.update({
   id: '/api/public/asaas-webhook',
   path: '/api/public/asaas-webhook',
@@ -351,6 +363,7 @@ export interface FileRoutesByFullPath {
   '/meus-ingressos': typeof StudentMeusIngressosRoute
   '/minha-area': typeof StudentMinhaAreaRoute
   '/admin/entrar': typeof AdminEntrarRoute
+  '/painel/assistente': typeof PainelAssistenteRoute
   '/painel/checkin': typeof PainelCheckinRoute
   '/painel/configuracoes': typeof PainelConfiguracoesRoute
   '/painel/diretoria': typeof PainelDiretoriaRoute
@@ -377,6 +390,7 @@ export interface FileRoutesByFullPath {
   '/momentos/$id': typeof PublicMomentosIdRoute
   '/noticias/$id': typeof PublicNoticiasIdRoute
   '/pagina/$slug': typeof PublicPaginaSlugRoute
+  '/api/public/ai': typeof ApiPublicAiRoute
   '/api/public/asaas-webhook': typeof ApiPublicAsaasWebhookRoute
   '/api/public/files/$': typeof ApiPublicFilesSplatRoute
 }
@@ -403,6 +417,7 @@ export interface FileRoutesByTo {
   '/meus-ingressos': typeof StudentMeusIngressosRoute
   '/minha-area': typeof StudentMinhaAreaRoute
   '/admin/entrar': typeof AdminEntrarRoute
+  '/painel/assistente': typeof PainelAssistenteRoute
   '/painel/checkin': typeof PainelCheckinRoute
   '/painel/configuracoes': typeof PainelConfiguracoesRoute
   '/painel/diretoria': typeof PainelDiretoriaRoute
@@ -429,6 +444,7 @@ export interface FileRoutesByTo {
   '/momentos/$id': typeof PublicMomentosIdRoute
   '/noticias/$id': typeof PublicNoticiasIdRoute
   '/pagina/$slug': typeof PublicPaginaSlugRoute
+  '/api/public/ai': typeof ApiPublicAiRoute
   '/api/public/asaas-webhook': typeof ApiPublicAsaasWebhookRoute
   '/api/public/files/$': typeof ApiPublicFilesSplatRoute
 }
@@ -459,6 +475,7 @@ export interface FileRoutesById {
   '/_student/meus-ingressos': typeof StudentMeusIngressosRoute
   '/_student/minha-area': typeof StudentMinhaAreaRoute
   '/admin_/entrar': typeof AdminEntrarRoute
+  '/painel/assistente': typeof PainelAssistenteRoute
   '/painel/checkin': typeof PainelCheckinRoute
   '/painel/configuracoes': typeof PainelConfiguracoesRoute
   '/painel/diretoria': typeof PainelDiretoriaRoute
@@ -485,6 +502,7 @@ export interface FileRoutesById {
   '/_public/momentos_/$id': typeof PublicMomentosIdRoute
   '/_public/noticias_/$id': typeof PublicNoticiasIdRoute
   '/_public/pagina/$slug': typeof PublicPaginaSlugRoute
+  '/api/public/ai': typeof ApiPublicAiRoute
   '/api/public/asaas-webhook': typeof ApiPublicAsaasWebhookRoute
   '/api/public/files/$': typeof ApiPublicFilesSplatRoute
 }
@@ -514,6 +532,7 @@ export interface FileRouteTypes {
     | '/meus-ingressos'
     | '/minha-area'
     | '/admin/entrar'
+    | '/painel/assistente'
     | '/painel/checkin'
     | '/painel/configuracoes'
     | '/painel/diretoria'
@@ -540,6 +559,7 @@ export interface FileRouteTypes {
     | '/momentos/$id'
     | '/noticias/$id'
     | '/pagina/$slug'
+    | '/api/public/ai'
     | '/api/public/asaas-webhook'
     | '/api/public/files/$'
   fileRoutesByTo: FileRoutesByTo
@@ -566,6 +586,7 @@ export interface FileRouteTypes {
     | '/meus-ingressos'
     | '/minha-area'
     | '/admin/entrar'
+    | '/painel/assistente'
     | '/painel/checkin'
     | '/painel/configuracoes'
     | '/painel/diretoria'
@@ -592,6 +613,7 @@ export interface FileRouteTypes {
     | '/momentos/$id'
     | '/noticias/$id'
     | '/pagina/$slug'
+    | '/api/public/ai'
     | '/api/public/asaas-webhook'
     | '/api/public/files/$'
   id:
@@ -621,6 +643,7 @@ export interface FileRouteTypes {
     | '/_student/meus-ingressos'
     | '/_student/minha-area'
     | '/admin_/entrar'
+    | '/painel/assistente'
     | '/painel/checkin'
     | '/painel/configuracoes'
     | '/painel/diretoria'
@@ -647,6 +670,7 @@ export interface FileRouteTypes {
     | '/_public/momentos_/$id'
     | '/_public/noticias_/$id'
     | '/_public/pagina/$slug'
+    | '/api/public/ai'
     | '/api/public/asaas-webhook'
     | '/api/public/files/$'
   fileRoutesById: FileRoutesById
@@ -663,6 +687,7 @@ export interface RootRouteChildren {
   ResetPasswordRoute: typeof ResetPasswordRoute
   AdminEntrarRoute: typeof AdminEntrarRoute
   PainelEntrarRoute: typeof PainelEntrarRoute
+  ApiPublicAiRoute: typeof ApiPublicAiRoute
   ApiPublicAsaasWebhookRoute: typeof ApiPublicAsaasWebhookRoute
   ApiPublicFilesSplatRoute: typeof ApiPublicFilesSplatRoute
 }
@@ -851,6 +876,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PainelIndexRouteImport
       parentRoute: typeof PainelRoute
     }
+    '/painel/assistente': {
+      id: '/painel/assistente'
+      path: '/assistente'
+      fullPath: '/painel/assistente'
+      preLoaderRoute: typeof PainelAssistenteRouteImport
+      parentRoute: typeof PainelRoute
+    }
     '/painel/checkin': {
       id: '/painel/checkin'
       path: '/checkin'
@@ -1026,6 +1058,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublicPaginaSlugRouteImport
       parentRoute: typeof PublicRoute
     }
+    '/api/public/ai': {
+      id: '/api/public/ai'
+      path: '/api/public/ai'
+      fullPath: '/api/public/ai'
+      preLoaderRoute: typeof ApiPublicAiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/asaas-webhook': {
       id: '/api/public/asaas-webhook'
       path: '/api/public/asaas-webhook'
@@ -1104,6 +1143,7 @@ const StudentRouteWithChildren =
   StudentRoute._addFileChildren(StudentRouteChildren)
 
 interface PainelRouteChildren {
+  PainelAssistenteRoute: typeof PainelAssistenteRoute
   PainelCheckinRoute: typeof PainelCheckinRoute
   PainelConfiguracoesRoute: typeof PainelConfiguracoesRoute
   PainelDiretoriaRoute: typeof PainelDiretoriaRoute
@@ -1126,6 +1166,7 @@ interface PainelRouteChildren {
 }
 
 const PainelRouteChildren: PainelRouteChildren = {
+  PainelAssistenteRoute: PainelAssistenteRoute,
   PainelCheckinRoute: PainelCheckinRoute,
   PainelConfiguracoesRoute: PainelConfiguracoesRoute,
   PainelDiretoriaRoute: PainelDiretoriaRoute,
@@ -1162,6 +1203,7 @@ const rootRouteChildren: RootRouteChildren = {
   ResetPasswordRoute: ResetPasswordRoute,
   AdminEntrarRoute: AdminEntrarRoute,
   PainelEntrarRoute: PainelEntrarRoute,
+  ApiPublicAiRoute: ApiPublicAiRoute,
   ApiPublicAsaasWebhookRoute: ApiPublicAsaasWebhookRoute,
   ApiPublicFilesSplatRoute: ApiPublicFilesSplatRoute,
 }

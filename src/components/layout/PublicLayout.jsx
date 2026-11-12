@@ -53,6 +53,7 @@ export default function PublicLayout({ children }) {
       </main>
 
       {!maintenance && <SiteFooter legalPages={legalPages} />}
+      {!maintenance && <SiteAssistant />}
     </div>
   );
 }
