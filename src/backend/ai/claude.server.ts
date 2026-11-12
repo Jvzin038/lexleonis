@@ -5,7 +5,7 @@ export const CLAUDE_MODEL = "anthropic/claude-sonnet-5";
 export type ChatMsg = { role: "user" | "assistant"; content: string };
 
 export async function streamClaude(opts: { system: string; messages: ChatMsg[]; maxTokens?: number; signal?: AbortSignal }): Promise<Response> {
-  const key = process.env.LOVABLE_API_KEY;
+  const key = process.env['LOVABLE_API_KEY'];
   if (!key) return Response.json({ error: "Assistente de IA não configurado." }, { status: 500 });
   const upstream = await fetch(GATEWAY, {
     method: "POST",
