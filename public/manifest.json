@@ -1,0 +1,45 @@
+{
+  "name": "Atlética Lex Leonis",
+  "short_name": "Lex Leonis",
+  "description": "Portal oficial da Atlética Lex Leonis — eventos, ingressos, esportes, loja e a vida da atlética do curso de Direito.",
+  "lang": "pt-BR",
+  "dir": "ltr",
+  "start_url": "/",
+  "scope": "/",
+  "id": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#24083F",
+  "theme_color": "#24083F",
+  "categories": [
+    "sports",
+    "education",
+    "shopping",
+    "social"
+  ],
+  "icons": [
+    {
+      "src": "/icon.png",
+      "sizes": "640x640",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Eventos",
+      "short_name": "Eventos",
+      "url": "/eventos"
+    },
+    {
+      "name": "Meus ingressos",
+      "short_name": "Ingressos",
+      "url": "/meus-ingressos"
+    },
+    {
+      "name": "Loja",
+      "short_name": "Loja",
+      "url": "/loja"
+    }
+  ]
+}

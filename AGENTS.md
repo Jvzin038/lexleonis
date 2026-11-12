@@ -28,3 +28,8 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+## Migration architecture (Base44 → Lovable)
+- Legacy Base44 pages live in `src/views` and use `src/lib/router-compat.jsx` and `src/api/base44Client.js`; keep that compatibility layer instead of rewriting pages, so ported screens keep working unchanged.
+- Former Base44 backend functions live in `src/backend/b44` and run only through `src/backend/invoke.functions.ts`; never import `src/backend` from client code (import protection).
+- Imported Base44 users are linked on first verified sign-in via `legacy_user_map` in `src/backend/account.functions.ts`; never link by client-supplied IDs.
