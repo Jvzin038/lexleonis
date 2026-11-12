@@ -9,7 +9,8 @@ const DefaultFallback = () => (
   </div>
 );
 
-export default function ProtectedRoute({ fallback = <DefaultFallback />, unauthenticatedElement, children = null }) {
+/** @param {{ fallback?: import("react").ReactNode, unauthenticatedElement?: import("react").ReactNode, children?: import("react").ReactNode }} props */
+export default function ProtectedRoute({ fallback = <DefaultFallback />, unauthenticatedElement, children }) {
   const { isAuthenticated, isLoadingAuth, authChecked, authError, checkUserAuth } = useAuth();
 
   useEffect(() => {

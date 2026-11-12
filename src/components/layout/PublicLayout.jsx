@@ -7,7 +7,8 @@ import SiteHeader from './SiteHeader';
 import SiteFooter from './SiteFooter';
 import MaintenanceNotice from './MaintenanceNotice';
 
-export default function PublicLayout({ children = null }) {
+/** @param {{ children?: import("react").ReactNode }} props */
+export default function PublicLayout({ children }) {
   const { settings } = useSite();
   const { isStaff } = useStaff();
   const [legalPages, setLegalPages] = useState([]);
