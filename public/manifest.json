@@ -11,15 +11,35 @@
   "orientation": "any",
   "background_color": "#24083F",
   "theme_color": "#24083F",
-  "categories": ["sports", "education", "shopping", "social"],
+  "categories": [
+    "sports",
+    "education",
+    "shopping",
+    "social"
+  ],
   "icons": [
-    { "src": "/icon.png", "sizes": "640x640", "type": "image/png", "purpose": "any" },
-    { "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
-    { "src": "/maskable.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "maskable" }
+    {
+      "src": "/icon.png",
+      "sizes": "640x640",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
   ],
   "shortcuts": [
-    { "name": "Eventos", "short_name": "Eventos", "url": "/eventos" },
-    { "name": "Meus ingressos", "short_name": "Ingressos", "url": "/meus-ingressos" },
-    { "name": "Loja", "short_name": "Loja", "url": "/loja" }
+    {
+      "name": "Eventos",
+      "short_name": "Eventos",
+      "url": "/eventos"
+    },
+    {
+      "name": "Meus ingressos",
+      "short_name": "Ingressos",
+      "url": "/meus-ingressos"
+    },
+    {
+      "name": "Loja",
+      "short_name": "Loja",
+      "url": "/loja"
+    }
   ]
 }

@@ -1,23 +1,19 @@
 import { createFileRoute } from "@tanstack/react-router";
+import PublicLayout from "@/components/layout/PublicLayout";
+import Page from "@/views/Home";
 
-// The home route ships no og:image, so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
-  component: Index,
+  head: () => ({
+    meta: [
+      { title: "Atlética Lex Leonis" },
+      { name: "description", content: "Portal oficial da Atlética Lex Leonis — eventos, ingressos, esportes, loja e a vida da atlética do curso de Direito." },
+      { property: "og:title", content: "Atlética Lex Leonis" },
+      { property: "og:description", content: "Portal oficial da Atlética Lex Leonis — eventos, ingressos, esportes, loja e a vida da atlética do curso de Direito." },
+    ],
+  }),
+  component: () => (
+    <PublicLayout>
+      <Page />
+    </PublicLayout>
+  ),
 });
-
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
-  return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
-  );
-}
