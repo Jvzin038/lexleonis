@@ -83,47 +83,18 @@ export default function Register() {
       <AuthLayout
         icon={Mail}
         title="Confirme seu e-mail"
-        subtitle={`Enviamos um código de 6 dígitos para ${email}`}
+        subtitle={`Enviamos um link de confirmação para ${email}`}
       >
         {error && (
           <div className="mb-4 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700">
             {error}
           </div>
         )}
-        <div className="flex justify-center mb-6">
-          <InputOTP
-            maxLength={6}
-            value={otpCode}
-            onChange={setOtpCode}
-            autoFocus
-            autoComplete="one-time-code"
-          >
-            <InputOTPGroup>
-              <InputOTPSlot index={0} />
-              <InputOTPSlot index={1} />
-              <InputOTPSlot index={2} />
-              <InputOTPSlot index={3} />
-              <InputOTPSlot index={4} />
-              <InputOTPSlot index={5} />
-            </InputOTPGroup>
-          </InputOTP>
-        </div>
-        <Button
-          className="h-12 w-full bg-brand-primary font-semibold text-white hover:bg-brand-deep"
-          onClick={handleVerify}
-          disabled={loading || otpCode.length < 6}
-        >
-          {loading ? (
-            <>
-              <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-              Confirmando...
-            </>
-          ) : (
-            "Confirmar"
-          )}
-        </Button>
+        <p className="mb-6 text-center text-sm text-slate-600">
+          Abra o e-mail e toque no link de confirmação para ativar sua conta. Depois disso você já entra automaticamente.
+        </p>
         <p className="mt-4 text-center text-sm text-slate-600">
-          Não recebeu o código?{" "}
+          Não recebeu o e-mail?{" "}
           <button onClick={handleResend} className="font-semibold text-brand-primary hover:underline">
             Reenviar
           </button>
