@@ -30,7 +30,10 @@ export const Route = createFileRoute("/api/public/tmp-verify")({
     }
     if (body.op === "cleanup") {
       for (const id of body.ids) await supabaseAdmin.auth.admin.deleteUser(id);
-      for (const t of ["registration","event","ticket_type","legacy_user_map","admin_log","ticket","staff_profile"]) await supabaseAdmin.from(t).delete().neq("created_date" in {} ? "x" : (t==="legacy_user_map"?"email":"id"), "__none__");
+      const out: Record<string, unknown> = {};
+      for (const t of ["registration","event","ticket_type","admin_log","ticket","check_in_log"] as const) { const r = await supabaseAdmin.from(t).delete().neq("id", "__none__"); out[t] = r.error?.message || "ok"; }
+      await supabaseAdmin.from("legacy_user_map").delete().neq("email", "__none__");
+      return Response.json(out);
       return Response.json({ ok: true });
     }
     return new Response("?", { status: 400 });
