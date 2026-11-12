@@ -1,0 +1,12 @@
+{"source":"base44","capabilities":[
+{"capability":"code (30 pages, public site, student area, admin panel)","source":"src/","outcome":"migrate","status":"pending","next_action":"Port pages to TanStack routes"},
+{"capability":"schema (29 entities)","source":"base44/Entidades","outcome":"migrate","status":"pending","next_action":"Enable Cloud, create tables + RLS"},
+{"capability":"records","source":"Base44 Dashboard","outcome":"migrate","status":"pending","next_action":"Request CSV exports after preview"},
+{"capability":"auth identities + MFA","source":"Base44 auth","outcome":"migrate","status":"pending","next_action":"Cloud auth, first-login verify + new password"},
+{"capability":"authorization (staff roles, permissions)","source":"permissions.js, staffAuth.ts","outcome":"migrate","status":"pending","next_action":"user_roles table + RLS"},
+{"capability":"Asaas PIX payments + webhook","source":"asaasPix.ts, asaasWebhook","outcome":"preserve","status":"pending","next_action":"Server functions + /api/public webhook; request ASAAS key"},
+{"capability":"ticketing (issue, QR, check-in, batches, expiry)","source":"base44 functions","outcome":"migrate","status":"pending","next_action":"Server functions + cron"},
+{"capability":"store orders","source":"createStoreOrder, StoreOrderActions","outcome":"migrate","status":"pending","next_action":"Server functions"},
+{"capability":"uploaded media bytes","source":"Base44 storage","outcome":"migrate","status":"pending","next_action":"Request file export"},
+{"capability":"PWA","source":"public/sw.js","outcome":"migrate","status":"pending","next_action":"Port manifest"},
+{"capability":"verification","source":"-","outcome":"verify","status":"pending","next_action":"After build"}]}
