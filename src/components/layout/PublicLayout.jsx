@@ -6,6 +6,7 @@ import { useStaff } from '@/lib/useStaff';
 import SiteHeader from './SiteHeader';
 import SiteFooter from './SiteFooter';
 import MaintenanceNotice from './MaintenanceNotice';
+import SiteAssistant from '@/components/ai/SiteAssistant';
 
 /** @param {{ children?: import("react").ReactNode }} props */
 export default function PublicLayout({ children }) {
