@@ -61,7 +61,6 @@ import { Route as PublicMomentosIdRouteImport } from './routes/_public/momentos_
 import { Route as PublicNoticiasIdRouteImport } from './routes/_public/noticias_.$id'
 import { Route as PublicPaginaSlugRouteImport } from './routes/_public/pagina.$slug'
 import { Route as ApiPublicAsaasWebhookRouteImport } from './routes/api/public/asaas-webhook'
-import { Route as ApiPublicTmpVerifyRouteImport } from './routes/api/public/tmp-verify'
 import { Route as ApiPublicFilesSplatRouteImport } from './routes/api/public/files.$'
 
 const IndexRoute = IndexRouteImport.update({
@@ -322,11 +321,6 @@ const ApiPublicAsaasWebhookRoute = ApiPublicAsaasWebhookRouteImport.update({
   path: '/api/public/asaas-webhook',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiPublicTmpVerifyRoute = ApiPublicTmpVerifyRouteImport.update({
-  id: '/api/public/tmp-verify',
-  path: '/api/public/tmp-verify',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ApiPublicFilesSplatRoute = ApiPublicFilesSplatRouteImport.update({
   id: '/api/public/files/$',
   path: '/api/public/files/$',
@@ -384,7 +378,6 @@ export interface FileRoutesByFullPath {
   '/noticias/$id': typeof PublicNoticiasIdRoute
   '/pagina/$slug': typeof PublicPaginaSlugRoute
   '/api/public/asaas-webhook': typeof ApiPublicAsaasWebhookRoute
-  '/api/public/tmp-verify': typeof ApiPublicTmpVerifyRoute
   '/api/public/files/$': typeof ApiPublicFilesSplatRoute
 }
 export interface FileRoutesByTo {
@@ -437,7 +430,6 @@ export interface FileRoutesByTo {
   '/noticias/$id': typeof PublicNoticiasIdRoute
   '/pagina/$slug': typeof PublicPaginaSlugRoute
   '/api/public/asaas-webhook': typeof ApiPublicAsaasWebhookRoute
-  '/api/public/tmp-verify': typeof ApiPublicTmpVerifyRoute
   '/api/public/files/$': typeof ApiPublicFilesSplatRoute
 }
 export interface FileRoutesById {
@@ -494,7 +486,6 @@ export interface FileRoutesById {
   '/_public/noticias_/$id': typeof PublicNoticiasIdRoute
   '/_public/pagina/$slug': typeof PublicPaginaSlugRoute
   '/api/public/asaas-webhook': typeof ApiPublicAsaasWebhookRoute
-  '/api/public/tmp-verify': typeof ApiPublicTmpVerifyRoute
   '/api/public/files/$': typeof ApiPublicFilesSplatRoute
 }
 export interface FileRouteTypes {
@@ -550,7 +541,6 @@ export interface FileRouteTypes {
     | '/noticias/$id'
     | '/pagina/$slug'
     | '/api/public/asaas-webhook'
-    | '/api/public/tmp-verify'
     | '/api/public/files/$'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -603,7 +593,6 @@ export interface FileRouteTypes {
     | '/noticias/$id'
     | '/pagina/$slug'
     | '/api/public/asaas-webhook'
-    | '/api/public/tmp-verify'
     | '/api/public/files/$'
   id:
     | '__root__'
@@ -659,7 +648,6 @@ export interface FileRouteTypes {
     | '/_public/noticias_/$id'
     | '/_public/pagina/$slug'
     | '/api/public/asaas-webhook'
-    | '/api/public/tmp-verify'
     | '/api/public/files/$'
   fileRoutesById: FileRoutesById
 }
@@ -676,7 +664,6 @@ export interface RootRouteChildren {
   AdminEntrarRoute: typeof AdminEntrarRoute
   PainelEntrarRoute: typeof PainelEntrarRoute
   ApiPublicAsaasWebhookRoute: typeof ApiPublicAsaasWebhookRoute
-  ApiPublicTmpVerifyRoute: typeof ApiPublicTmpVerifyRoute
   ApiPublicFilesSplatRoute: typeof ApiPublicFilesSplatRoute
 }
 
@@ -1046,13 +1033,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicAsaasWebhookRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/public/tmp-verify': {
-      id: '/api/public/tmp-verify'
-      path: '/api/public/tmp-verify'
-      fullPath: '/api/public/tmp-verify'
-      preLoaderRoute: typeof ApiPublicTmpVerifyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/api/public/files/$': {
       id: '/api/public/files/$'
       path: '/api/public/files/$'
@@ -1183,7 +1163,6 @@ const rootRouteChildren: RootRouteChildren = {
   AdminEntrarRoute: AdminEntrarRoute,
   PainelEntrarRoute: PainelEntrarRoute,
   ApiPublicAsaasWebhookRoute: ApiPublicAsaasWebhookRoute,
-  ApiPublicTmpVerifyRoute: ApiPublicTmpVerifyRoute,
   ApiPublicFilesSplatRoute: ApiPublicFilesSplatRoute,
 }
 export const routeTree = rootRouteImport
