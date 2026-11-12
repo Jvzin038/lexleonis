@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import Page from "@/views/AlbumDetalhe";
 
-export const Route = createFileRoute("/_public/momentos/$id")({
+export const Route = createFileRoute("/_public/momentos_/$id")({
   head: () => ({
     meta: [
       { title: "Álbum • Atlética Lex Leonis" },

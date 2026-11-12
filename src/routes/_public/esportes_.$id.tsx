@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import Page from "@/views/ModalidadeDetalhe";
 
-export const Route = createFileRoute("/_public/esportes/$id")({
+export const Route = createFileRoute("/_public/esportes_/$id")({
   head: () => ({
     meta: [
       { title: "Modalidade • Atlética Lex Leonis" },

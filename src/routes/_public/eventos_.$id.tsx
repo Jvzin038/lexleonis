@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import Page from "@/views/EventoDetalhe";
 
-export const Route = createFileRoute("/_public/eventos/$id")({
+export const Route = createFileRoute("/_public/eventos_/$id")({
   head: () => ({
     meta: [
       { title: "Evento • Atlética Lex Leonis" },

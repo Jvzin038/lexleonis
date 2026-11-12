@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import Page from "@/views/ProdutoDetalhe";
 
-export const Route = createFileRoute("/_public/loja/$id")({
+export const Route = createFileRoute("/_public/loja_/$id")({
   head: () => ({
     meta: [
       { title: "Produto • Atlética Lex Leonis" },

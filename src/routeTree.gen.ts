@@ -10,6 +10,56 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as PublicRouteImport } from './routes/_public'
+import { Route as StudentRouteImport } from './routes/_student'
+import { Route as AdminRouteImport } from './routes/admin'
+import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as PainelRouteImport } from './routes/painel'
+import { Route as RegisterRouteImport } from './routes/register'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as PublicAtleticaRouteImport } from './routes/_public/atletica'
+import { Route as PublicBuscaRouteImport } from './routes/_public/busca'
+import { Route as PublicCalendarioRouteImport } from './routes/_public/calendario'
+import { Route as PublicCarrinhoRouteImport } from './routes/_public/carrinho'
+import { Route as PublicContatoRouteImport } from './routes/_public/contato'
+import { Route as PublicEsportesRouteImport } from './routes/_public/esportes'
+import { Route as PublicEventosRouteImport } from './routes/_public/eventos'
+import { Route as PublicFaqRouteImport } from './routes/_public/faq'
+import { Route as PublicLojaRouteImport } from './routes/_public/loja'
+import { Route as PublicMomentosRouteImport } from './routes/_public/momentos'
+import { Route as PublicNoticiasRouteImport } from './routes/_public/noticias'
+import { Route as PublicPatrocinadoresRouteImport } from './routes/_public/patrocinadores'
+import { Route as PublicSejaPatrocinadorRouteImport } from './routes/_public/seja-patrocinador'
+import { Route as StudentMeusIngressosRouteImport } from './routes/_student.meus-ingressos'
+import { Route as StudentMinhaAreaRouteImport } from './routes/_student.minha-area'
+import { Route as AdminEntrarRouteImport } from './routes/admin.entrar'
+import { Route as PainelIndexRouteImport } from './routes/painel/index'
+import { Route as PainelCheckinRouteImport } from './routes/painel/checkin'
+import { Route as PainelConfiguracoesRouteImport } from './routes/painel/configuracoes'
+import { Route as PainelDiretoriaRouteImport } from './routes/painel/diretoria'
+import { Route as PainelEsportesRouteImport } from './routes/painel/esportes'
+import { Route as PainelEventosRouteImport } from './routes/painel/eventos'
+import { Route as PainelFinanceiroRouteImport } from './routes/painel/financeiro'
+import { Route as PainelIngressosRouteImport } from './routes/painel/ingressos'
+import { Route as PainelInscricoesRouteImport } from './routes/painel/inscricoes'
+import { Route as PainelLojaRouteImport } from './routes/painel/loja'
+import { Route as PainelMensagensRouteImport } from './routes/painel/mensagens'
+import { Route as PainelMidiaRouteImport } from './routes/painel/midia'
+import { Route as PainelMomentosRouteImport } from './routes/painel/momentos'
+import { Route as PainelNoticiasRouteImport } from './routes/painel/noticias'
+import { Route as PainelPaginasRouteImport } from './routes/painel/paginas'
+import { Route as PainelPatrocinadoresRouteImport } from './routes/painel/patrocinadores'
+import { Route as PainelPedidosRouteImport } from './routes/painel/pedidos'
+import { Route as PainelSiteRouteImport } from './routes/painel/site'
+import { Route as PainelUsuariosRouteImport } from './routes/painel/usuarios'
+import { Route as PainelEntrarRouteImport } from './routes/painel_.entrar'
+import { Route as PublicEsportesIdRouteImport } from './routes/_public/esportes.$id'
+import { Route as PublicEventosIdRouteImport } from './routes/_public/eventos.$id'
+import { Route as PublicLojaIdRouteImport } from './routes/_public/loja.$id'
+import { Route as PublicMomentosIdRouteImport } from './routes/_public/momentos.$id'
+import { Route as PublicNoticiasIdRouteImport } from './routes/_public/noticias.$id'
+import { Route as PublicPaginaSlugRouteImport } from './routes/_public/pagina.$slug'
 import { Route as ApiPublicAsaasWebhookRouteImport } from './routes/api/public/asaas-webhook'
 import { Route as ApiPublicFilesSplatRouteImport } from './routes/api/public/files.$'
 
@@ -17,6 +67,254 @@ const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const PublicRoute = PublicRouteImport.update({
+  id: '/_public',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StudentRoute = StudentRouteImport.update({
+  id: '/_student',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
+  id: '/forgot-password',
+  path: '/forgot-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PainelRoute = PainelRouteImport.update({
+  id: '/painel',
+  path: '/painel',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RegisterRoute = RegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PublicAtleticaRoute = PublicAtleticaRouteImport.update({
+  id: '/atletica',
+  path: '/atletica',
+  getParentRoute: () => PublicRoute,
+} as any)
+const PublicBuscaRoute = PublicBuscaRouteImport.update({
+  id: '/busca',
+  path: '/busca',
+  getParentRoute: () => PublicRoute,
+} as any)
+const PublicCalendarioRoute = PublicCalendarioRouteImport.update({
+  id: '/calendario',
+  path: '/calendario',
+  getParentRoute: () => PublicRoute,
+} as any)
+const PublicCarrinhoRoute = PublicCarrinhoRouteImport.update({
+  id: '/carrinho',
+  path: '/carrinho',
+  getParentRoute: () => PublicRoute,
+} as any)
+const PublicContatoRoute = PublicContatoRouteImport.update({
+  id: '/contato',
+  path: '/contato',
+  getParentRoute: () => PublicRoute,
+} as any)
+const PublicEsportesRoute = PublicEsportesRouteImport.update({
+  id: '/esportes',
+  path: '/esportes',
+  getParentRoute: () => PublicRoute,
+} as any)
+const PublicEventosRoute = PublicEventosRouteImport.update({
+  id: '/eventos',
+  path: '/eventos',
+  getParentRoute: () => PublicRoute,
+} as any)
+const PublicFaqRoute = PublicFaqRouteImport.update({
+  id: '/faq',
+  path: '/faq',
+  getParentRoute: () => PublicRoute,
+} as any)
+const PublicLojaRoute = PublicLojaRouteImport.update({
+  id: '/loja',
+  path: '/loja',
+  getParentRoute: () => PublicRoute,
+} as any)
+const PublicMomentosRoute = PublicMomentosRouteImport.update({
+  id: '/momentos',
+  path: '/momentos',
+  getParentRoute: () => PublicRoute,
+} as any)
+const PublicNoticiasRoute = PublicNoticiasRouteImport.update({
+  id: '/noticias',
+  path: '/noticias',
+  getParentRoute: () => PublicRoute,
+} as any)
+const PublicPatrocinadoresRoute = PublicPatrocinadoresRouteImport.update({
+  id: '/patrocinadores',
+  path: '/patrocinadores',
+  getParentRoute: () => PublicRoute,
+} as any)
+const PublicSejaPatrocinadorRoute = PublicSejaPatrocinadorRouteImport.update({
+  id: '/seja-patrocinador',
+  path: '/seja-patrocinador',
+  getParentRoute: () => PublicRoute,
+} as any)
+const StudentMeusIngressosRoute = StudentMeusIngressosRouteImport.update({
+  id: '/meus-ingressos',
+  path: '/meus-ingressos',
+  getParentRoute: () => StudentRoute,
+} as any)
+const StudentMinhaAreaRoute = StudentMinhaAreaRouteImport.update({
+  id: '/minha-area',
+  path: '/minha-area',
+  getParentRoute: () => StudentRoute,
+} as any)
+const AdminEntrarRoute = AdminEntrarRouteImport.update({
+  id: '/entrar',
+  path: '/entrar',
+  getParentRoute: () => AdminRoute,
+} as any)
+const PainelIndexRoute = PainelIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => PainelRoute,
+} as any)
+const PainelCheckinRoute = PainelCheckinRouteImport.update({
+  id: '/checkin',
+  path: '/checkin',
+  getParentRoute: () => PainelRoute,
+} as any)
+const PainelConfiguracoesRoute = PainelConfiguracoesRouteImport.update({
+  id: '/configuracoes',
+  path: '/configuracoes',
+  getParentRoute: () => PainelRoute,
+} as any)
+const PainelDiretoriaRoute = PainelDiretoriaRouteImport.update({
+  id: '/diretoria',
+  path: '/diretoria',
+  getParentRoute: () => PainelRoute,
+} as any)
+const PainelEsportesRoute = PainelEsportesRouteImport.update({
+  id: '/esportes',
+  path: '/esportes',
+  getParentRoute: () => PainelRoute,
+} as any)
+const PainelEventosRoute = PainelEventosRouteImport.update({
+  id: '/eventos',
+  path: '/eventos',
+  getParentRoute: () => PainelRoute,
+} as any)
+const PainelFinanceiroRoute = PainelFinanceiroRouteImport.update({
+  id: '/financeiro',
+  path: '/financeiro',
+  getParentRoute: () => PainelRoute,
+} as any)
+const PainelIngressosRoute = PainelIngressosRouteImport.update({
+  id: '/ingressos',
+  path: '/ingressos',
+  getParentRoute: () => PainelRoute,
+} as any)
+const PainelInscricoesRoute = PainelInscricoesRouteImport.update({
+  id: '/inscricoes',
+  path: '/inscricoes',
+  getParentRoute: () => PainelRoute,
+} as any)
+const PainelLojaRoute = PainelLojaRouteImport.update({
+  id: '/loja',
+  path: '/loja',
+  getParentRoute: () => PainelRoute,
+} as any)
+const PainelMensagensRoute = PainelMensagensRouteImport.update({
+  id: '/mensagens',
+  path: '/mensagens',
+  getParentRoute: () => PainelRoute,
+} as any)
+const PainelMidiaRoute = PainelMidiaRouteImport.update({
+  id: '/midia',
+  path: '/midia',
+  getParentRoute: () => PainelRoute,
+} as any)
+const PainelMomentosRoute = PainelMomentosRouteImport.update({
+  id: '/momentos',
+  path: '/momentos',
+  getParentRoute: () => PainelRoute,
+} as any)
+const PainelNoticiasRoute = PainelNoticiasRouteImport.update({
+  id: '/noticias',
+  path: '/noticias',
+  getParentRoute: () => PainelRoute,
+} as any)
+const PainelPaginasRoute = PainelPaginasRouteImport.update({
+  id: '/paginas',
+  path: '/paginas',
+  getParentRoute: () => PainelRoute,
+} as any)
+const PainelPatrocinadoresRoute = PainelPatrocinadoresRouteImport.update({
+  id: '/patrocinadores',
+  path: '/patrocinadores',
+  getParentRoute: () => PainelRoute,
+} as any)
+const PainelPedidosRoute = PainelPedidosRouteImport.update({
+  id: '/pedidos',
+  path: '/pedidos',
+  getParentRoute: () => PainelRoute,
+} as any)
+const PainelSiteRoute = PainelSiteRouteImport.update({
+  id: '/site',
+  path: '/site',
+  getParentRoute: () => PainelRoute,
+} as any)
+const PainelUsuariosRoute = PainelUsuariosRouteImport.update({
+  id: '/usuarios',
+  path: '/usuarios',
+  getParentRoute: () => PainelRoute,
+} as any)
+const PainelEntrarRoute = PainelEntrarRouteImport.update({
+  id: '/painel_/entrar',
+  path: '/painel/entrar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PublicEsportesIdRoute = PublicEsportesIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => PublicEsportesRoute,
+} as any)
+const PublicEventosIdRoute = PublicEventosIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => PublicEventosRoute,
+} as any)
+const PublicLojaIdRoute = PublicLojaIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => PublicLojaRoute,
+} as any)
+const PublicMomentosIdRoute = PublicMomentosIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => PublicMomentosRoute,
+} as any)
+const PublicNoticiasIdRoute = PublicNoticiasIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => PublicNoticiasRoute,
+} as any)
+const PublicPaginaSlugRoute = PublicPaginaSlugRouteImport.update({
+  id: '/pagina/$slug',
+  path: '/pagina/$slug',
+  getParentRoute: () => PublicRoute,
 } as any)
 const ApiPublicAsaasWebhookRoute = ApiPublicAsaasWebhookRouteImport.update({
   id: '/api/public/asaas-webhook',
@@ -31,30 +329,339 @@ const ApiPublicFilesSplatRoute = ApiPublicFilesSplatRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/login': typeof LoginRoute
+  '/painel': typeof PainelRouteWithChildren
+  '/register': typeof RegisterRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/atletica': typeof PublicAtleticaRoute
+  '/busca': typeof PublicBuscaRoute
+  '/calendario': typeof PublicCalendarioRoute
+  '/carrinho': typeof PublicCarrinhoRoute
+  '/contato': typeof PublicContatoRoute
+  '/esportes': typeof PublicEsportesRouteWithChildren
+  '/eventos': typeof PublicEventosRouteWithChildren
+  '/faq': typeof PublicFaqRoute
+  '/loja': typeof PublicLojaRouteWithChildren
+  '/momentos': typeof PublicMomentosRouteWithChildren
+  '/noticias': typeof PublicNoticiasRouteWithChildren
+  '/patrocinadores': typeof PublicPatrocinadoresRoute
+  '/seja-patrocinador': typeof PublicSejaPatrocinadorRoute
+  '/meus-ingressos': typeof StudentMeusIngressosRoute
+  '/minha-area': typeof StudentMinhaAreaRoute
+  '/admin/entrar': typeof AdminEntrarRoute
+  '/painel/checkin': typeof PainelCheckinRoute
+  '/painel/configuracoes': typeof PainelConfiguracoesRoute
+  '/painel/diretoria': typeof PainelDiretoriaRoute
+  '/painel/esportes': typeof PainelEsportesRoute
+  '/painel/eventos': typeof PainelEventosRoute
+  '/painel/financeiro': typeof PainelFinanceiroRoute
+  '/painel/ingressos': typeof PainelIngressosRoute
+  '/painel/inscricoes': typeof PainelInscricoesRoute
+  '/painel/loja': typeof PainelLojaRoute
+  '/painel/mensagens': typeof PainelMensagensRoute
+  '/painel/midia': typeof PainelMidiaRoute
+  '/painel/momentos': typeof PainelMomentosRoute
+  '/painel/noticias': typeof PainelNoticiasRoute
+  '/painel/paginas': typeof PainelPaginasRoute
+  '/painel/patrocinadores': typeof PainelPatrocinadoresRoute
+  '/painel/pedidos': typeof PainelPedidosRoute
+  '/painel/site': typeof PainelSiteRoute
+  '/painel/usuarios': typeof PainelUsuariosRoute
+  '/painel/entrar': typeof PainelEntrarRoute
+  '/painel/': typeof PainelIndexRoute
+  '/esportes/$id': typeof PublicEsportesIdRoute
+  '/eventos/$id': typeof PublicEventosIdRoute
+  '/loja/$id': typeof PublicLojaIdRoute
+  '/momentos/$id': typeof PublicMomentosIdRoute
+  '/noticias/$id': typeof PublicNoticiasIdRoute
+  '/pagina/$slug': typeof PublicPaginaSlugRoute
   '/api/public/asaas-webhook': typeof ApiPublicAsaasWebhookRoute
   '/api/public/files/$': typeof ApiPublicFilesSplatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/login': typeof LoginRoute
+  '/register': typeof RegisterRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/atletica': typeof PublicAtleticaRoute
+  '/busca': typeof PublicBuscaRoute
+  '/calendario': typeof PublicCalendarioRoute
+  '/carrinho': typeof PublicCarrinhoRoute
+  '/contato': typeof PublicContatoRoute
+  '/esportes': typeof PublicEsportesRouteWithChildren
+  '/eventos': typeof PublicEventosRouteWithChildren
+  '/faq': typeof PublicFaqRoute
+  '/loja': typeof PublicLojaRouteWithChildren
+  '/momentos': typeof PublicMomentosRouteWithChildren
+  '/noticias': typeof PublicNoticiasRouteWithChildren
+  '/patrocinadores': typeof PublicPatrocinadoresRoute
+  '/seja-patrocinador': typeof PublicSejaPatrocinadorRoute
+  '/meus-ingressos': typeof StudentMeusIngressosRoute
+  '/minha-area': typeof StudentMinhaAreaRoute
+  '/admin/entrar': typeof AdminEntrarRoute
+  '/painel/checkin': typeof PainelCheckinRoute
+  '/painel/configuracoes': typeof PainelConfiguracoesRoute
+  '/painel/diretoria': typeof PainelDiretoriaRoute
+  '/painel/esportes': typeof PainelEsportesRoute
+  '/painel/eventos': typeof PainelEventosRoute
+  '/painel/financeiro': typeof PainelFinanceiroRoute
+  '/painel/ingressos': typeof PainelIngressosRoute
+  '/painel/inscricoes': typeof PainelInscricoesRoute
+  '/painel/loja': typeof PainelLojaRoute
+  '/painel/mensagens': typeof PainelMensagensRoute
+  '/painel/midia': typeof PainelMidiaRoute
+  '/painel/momentos': typeof PainelMomentosRoute
+  '/painel/noticias': typeof PainelNoticiasRoute
+  '/painel/paginas': typeof PainelPaginasRoute
+  '/painel/patrocinadores': typeof PainelPatrocinadoresRoute
+  '/painel/pedidos': typeof PainelPedidosRoute
+  '/painel/site': typeof PainelSiteRoute
+  '/painel/usuarios': typeof PainelUsuariosRoute
+  '/painel/entrar': typeof PainelEntrarRoute
+  '/painel': typeof PainelIndexRoute
+  '/esportes/$id': typeof PublicEsportesIdRoute
+  '/eventos/$id': typeof PublicEventosIdRoute
+  '/loja/$id': typeof PublicLojaIdRoute
+  '/momentos/$id': typeof PublicMomentosIdRoute
+  '/noticias/$id': typeof PublicNoticiasIdRoute
+  '/pagina/$slug': typeof PublicPaginaSlugRoute
   '/api/public/asaas-webhook': typeof ApiPublicAsaasWebhookRoute
   '/api/public/files/$': typeof ApiPublicFilesSplatRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_public': typeof PublicRouteWithChildren
+  '/_student': typeof StudentRouteWithChildren
+  '/admin': typeof AdminRouteWithChildren
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/login': typeof LoginRoute
+  '/painel': typeof PainelRouteWithChildren
+  '/register': typeof RegisterRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/_public/atletica': typeof PublicAtleticaRoute
+  '/_public/busca': typeof PublicBuscaRoute
+  '/_public/calendario': typeof PublicCalendarioRoute
+  '/_public/carrinho': typeof PublicCarrinhoRoute
+  '/_public/contato': typeof PublicContatoRoute
+  '/_public/esportes': typeof PublicEsportesRouteWithChildren
+  '/_public/eventos': typeof PublicEventosRouteWithChildren
+  '/_public/faq': typeof PublicFaqRoute
+  '/_public/loja': typeof PublicLojaRouteWithChildren
+  '/_public/momentos': typeof PublicMomentosRouteWithChildren
+  '/_public/noticias': typeof PublicNoticiasRouteWithChildren
+  '/_public/patrocinadores': typeof PublicPatrocinadoresRoute
+  '/_public/seja-patrocinador': typeof PublicSejaPatrocinadorRoute
+  '/_student/meus-ingressos': typeof StudentMeusIngressosRoute
+  '/_student/minha-area': typeof StudentMinhaAreaRoute
+  '/admin/entrar': typeof AdminEntrarRoute
+  '/painel/checkin': typeof PainelCheckinRoute
+  '/painel/configuracoes': typeof PainelConfiguracoesRoute
+  '/painel/diretoria': typeof PainelDiretoriaRoute
+  '/painel/esportes': typeof PainelEsportesRoute
+  '/painel/eventos': typeof PainelEventosRoute
+  '/painel/financeiro': typeof PainelFinanceiroRoute
+  '/painel/ingressos': typeof PainelIngressosRoute
+  '/painel/inscricoes': typeof PainelInscricoesRoute
+  '/painel/loja': typeof PainelLojaRoute
+  '/painel/mensagens': typeof PainelMensagensRoute
+  '/painel/midia': typeof PainelMidiaRoute
+  '/painel/momentos': typeof PainelMomentosRoute
+  '/painel/noticias': typeof PainelNoticiasRoute
+  '/painel/paginas': typeof PainelPaginasRoute
+  '/painel/patrocinadores': typeof PainelPatrocinadoresRoute
+  '/painel/pedidos': typeof PainelPedidosRoute
+  '/painel/site': typeof PainelSiteRoute
+  '/painel/usuarios': typeof PainelUsuariosRoute
+  '/painel_/entrar': typeof PainelEntrarRoute
+  '/painel/': typeof PainelIndexRoute
+  '/_public/esportes/$id': typeof PublicEsportesIdRoute
+  '/_public/eventos/$id': typeof PublicEventosIdRoute
+  '/_public/loja/$id': typeof PublicLojaIdRoute
+  '/_public/momentos/$id': typeof PublicMomentosIdRoute
+  '/_public/noticias/$id': typeof PublicNoticiasIdRoute
+  '/_public/pagina/$slug': typeof PublicPaginaSlugRoute
   '/api/public/asaas-webhook': typeof ApiPublicAsaasWebhookRoute
   '/api/public/files/$': typeof ApiPublicFilesSplatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/api/public/asaas-webhook' | '/api/public/files/$'
+  fullPaths:
+    | '/'
+    | '/admin'
+    | '/forgot-password'
+    | '/login'
+    | '/painel'
+    | '/register'
+    | '/reset-password'
+    | '/atletica'
+    | '/busca'
+    | '/calendario'
+    | '/carrinho'
+    | '/contato'
+    | '/esportes'
+    | '/eventos'
+    | '/faq'
+    | '/loja'
+    | '/momentos'
+    | '/noticias'
+    | '/patrocinadores'
+    | '/seja-patrocinador'
+    | '/meus-ingressos'
+    | '/minha-area'
+    | '/admin/entrar'
+    | '/painel/checkin'
+    | '/painel/configuracoes'
+    | '/painel/diretoria'
+    | '/painel/esportes'
+    | '/painel/eventos'
+    | '/painel/financeiro'
+    | '/painel/ingressos'
+    | '/painel/inscricoes'
+    | '/painel/loja'
+    | '/painel/mensagens'
+    | '/painel/midia'
+    | '/painel/momentos'
+    | '/painel/noticias'
+    | '/painel/paginas'
+    | '/painel/patrocinadores'
+    | '/painel/pedidos'
+    | '/painel/site'
+    | '/painel/usuarios'
+    | '/painel/entrar'
+    | '/painel/'
+    | '/esportes/$id'
+    | '/eventos/$id'
+    | '/loja/$id'
+    | '/momentos/$id'
+    | '/noticias/$id'
+    | '/pagina/$slug'
+    | '/api/public/asaas-webhook'
+    | '/api/public/files/$'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/api/public/asaas-webhook' | '/api/public/files/$'
-  id: '__root__' | '/' | '/api/public/asaas-webhook' | '/api/public/files/$'
+  to:
+    | '/'
+    | '/admin'
+    | '/forgot-password'
+    | '/login'
+    | '/register'
+    | '/reset-password'
+    | '/atletica'
+    | '/busca'
+    | '/calendario'
+    | '/carrinho'
+    | '/contato'
+    | '/esportes'
+    | '/eventos'
+    | '/faq'
+    | '/loja'
+    | '/momentos'
+    | '/noticias'
+    | '/patrocinadores'
+    | '/seja-patrocinador'
+    | '/meus-ingressos'
+    | '/minha-area'
+    | '/admin/entrar'
+    | '/painel/checkin'
+    | '/painel/configuracoes'
+    | '/painel/diretoria'
+    | '/painel/esportes'
+    | '/painel/eventos'
+    | '/painel/financeiro'
+    | '/painel/ingressos'
+    | '/painel/inscricoes'
+    | '/painel/loja'
+    | '/painel/mensagens'
+    | '/painel/midia'
+    | '/painel/momentos'
+    | '/painel/noticias'
+    | '/painel/paginas'
+    | '/painel/patrocinadores'
+    | '/painel/pedidos'
+    | '/painel/site'
+    | '/painel/usuarios'
+    | '/painel/entrar'
+    | '/painel'
+    | '/esportes/$id'
+    | '/eventos/$id'
+    | '/loja/$id'
+    | '/momentos/$id'
+    | '/noticias/$id'
+    | '/pagina/$slug'
+    | '/api/public/asaas-webhook'
+    | '/api/public/files/$'
+  id:
+    | '__root__'
+    | '/'
+    | '/_public'
+    | '/_student'
+    | '/admin'
+    | '/forgot-password'
+    | '/login'
+    | '/painel'
+    | '/register'
+    | '/reset-password'
+    | '/_public/atletica'
+    | '/_public/busca'
+    | '/_public/calendario'
+    | '/_public/carrinho'
+    | '/_public/contato'
+    | '/_public/esportes'
+    | '/_public/eventos'
+    | '/_public/faq'
+    | '/_public/loja'
+    | '/_public/momentos'
+    | '/_public/noticias'
+    | '/_public/patrocinadores'
+    | '/_public/seja-patrocinador'
+    | '/_student/meus-ingressos'
+    | '/_student/minha-area'
+    | '/admin/entrar'
+    | '/painel/checkin'
+    | '/painel/configuracoes'
+    | '/painel/diretoria'
+    | '/painel/esportes'
+    | '/painel/eventos'
+    | '/painel/financeiro'
+    | '/painel/ingressos'
+    | '/painel/inscricoes'
+    | '/painel/loja'
+    | '/painel/mensagens'
+    | '/painel/midia'
+    | '/painel/momentos'
+    | '/painel/noticias'
+    | '/painel/paginas'
+    | '/painel/patrocinadores'
+    | '/painel/pedidos'
+    | '/painel/site'
+    | '/painel/usuarios'
+    | '/painel_/entrar'
+    | '/painel/'
+    | '/_public/esportes/$id'
+    | '/_public/eventos/$id'
+    | '/_public/loja/$id'
+    | '/_public/momentos/$id'
+    | '/_public/noticias/$id'
+    | '/_public/pagina/$slug'
+    | '/api/public/asaas-webhook'
+    | '/api/public/files/$'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  PublicRoute: typeof PublicRouteWithChildren
+  StudentRoute: typeof StudentRouteWithChildren
+  AdminRoute: typeof AdminRouteWithChildren
+  ForgotPasswordRoute: typeof ForgotPasswordRoute
+  LoginRoute: typeof LoginRoute
+  PainelRoute: typeof PainelRouteWithChildren
+  RegisterRoute: typeof RegisterRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
+  PainelEntrarRoute: typeof PainelEntrarRoute
   ApiPublicAsaasWebhookRoute: typeof ApiPublicAsaasWebhookRoute
   ApiPublicFilesSplatRoute: typeof ApiPublicFilesSplatRoute
 }
@@ -67,6 +674,356 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_public': {
+      id: '/_public'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof PublicRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_student': {
+      id: '/_student'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof StudentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/forgot-password': {
+      id: '/forgot-password'
+      path: '/forgot-password'
+      fullPath: '/forgot-password'
+      preLoaderRoute: typeof ForgotPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/painel': {
+      id: '/painel'
+      path: '/painel'
+      fullPath: '/painel'
+      preLoaderRoute: typeof PainelRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/register': {
+      id: '/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof RegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_public/atletica': {
+      id: '/_public/atletica'
+      path: '/atletica'
+      fullPath: '/atletica'
+      preLoaderRoute: typeof PublicAtleticaRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/busca': {
+      id: '/_public/busca'
+      path: '/busca'
+      fullPath: '/busca'
+      preLoaderRoute: typeof PublicBuscaRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/calendario': {
+      id: '/_public/calendario'
+      path: '/calendario'
+      fullPath: '/calendario'
+      preLoaderRoute: typeof PublicCalendarioRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/carrinho': {
+      id: '/_public/carrinho'
+      path: '/carrinho'
+      fullPath: '/carrinho'
+      preLoaderRoute: typeof PublicCarrinhoRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/contato': {
+      id: '/_public/contato'
+      path: '/contato'
+      fullPath: '/contato'
+      preLoaderRoute: typeof PublicContatoRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/esportes': {
+      id: '/_public/esportes'
+      path: '/esportes'
+      fullPath: '/esportes'
+      preLoaderRoute: typeof PublicEsportesRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/eventos': {
+      id: '/_public/eventos'
+      path: '/eventos'
+      fullPath: '/eventos'
+      preLoaderRoute: typeof PublicEventosRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/faq': {
+      id: '/_public/faq'
+      path: '/faq'
+      fullPath: '/faq'
+      preLoaderRoute: typeof PublicFaqRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/loja': {
+      id: '/_public/loja'
+      path: '/loja'
+      fullPath: '/loja'
+      preLoaderRoute: typeof PublicLojaRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/momentos': {
+      id: '/_public/momentos'
+      path: '/momentos'
+      fullPath: '/momentos'
+      preLoaderRoute: typeof PublicMomentosRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/noticias': {
+      id: '/_public/noticias'
+      path: '/noticias'
+      fullPath: '/noticias'
+      preLoaderRoute: typeof PublicNoticiasRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/patrocinadores': {
+      id: '/_public/patrocinadores'
+      path: '/patrocinadores'
+      fullPath: '/patrocinadores'
+      preLoaderRoute: typeof PublicPatrocinadoresRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/seja-patrocinador': {
+      id: '/_public/seja-patrocinador'
+      path: '/seja-patrocinador'
+      fullPath: '/seja-patrocinador'
+      preLoaderRoute: typeof PublicSejaPatrocinadorRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_student/meus-ingressos': {
+      id: '/_student/meus-ingressos'
+      path: '/meus-ingressos'
+      fullPath: '/meus-ingressos'
+      preLoaderRoute: typeof StudentMeusIngressosRouteImport
+      parentRoute: typeof StudentRoute
+    }
+    '/_student/minha-area': {
+      id: '/_student/minha-area'
+      path: '/minha-area'
+      fullPath: '/minha-area'
+      preLoaderRoute: typeof StudentMinhaAreaRouteImport
+      parentRoute: typeof StudentRoute
+    }
+    '/admin/entrar': {
+      id: '/admin/entrar'
+      path: '/entrar'
+      fullPath: '/admin/entrar'
+      preLoaderRoute: typeof AdminEntrarRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/painel/': {
+      id: '/painel/'
+      path: '/'
+      fullPath: '/painel/'
+      preLoaderRoute: typeof PainelIndexRouteImport
+      parentRoute: typeof PainelRoute
+    }
+    '/painel/checkin': {
+      id: '/painel/checkin'
+      path: '/checkin'
+      fullPath: '/painel/checkin'
+      preLoaderRoute: typeof PainelCheckinRouteImport
+      parentRoute: typeof PainelRoute
+    }
+    '/painel/configuracoes': {
+      id: '/painel/configuracoes'
+      path: '/configuracoes'
+      fullPath: '/painel/configuracoes'
+      preLoaderRoute: typeof PainelConfiguracoesRouteImport
+      parentRoute: typeof PainelRoute
+    }
+    '/painel/diretoria': {
+      id: '/painel/diretoria'
+      path: '/diretoria'
+      fullPath: '/painel/diretoria'
+      preLoaderRoute: typeof PainelDiretoriaRouteImport
+      parentRoute: typeof PainelRoute
+    }
+    '/painel/esportes': {
+      id: '/painel/esportes'
+      path: '/esportes'
+      fullPath: '/painel/esportes'
+      preLoaderRoute: typeof PainelEsportesRouteImport
+      parentRoute: typeof PainelRoute
+    }
+    '/painel/eventos': {
+      id: '/painel/eventos'
+      path: '/eventos'
+      fullPath: '/painel/eventos'
+      preLoaderRoute: typeof PainelEventosRouteImport
+      parentRoute: typeof PainelRoute
+    }
+    '/painel/financeiro': {
+      id: '/painel/financeiro'
+      path: '/financeiro'
+      fullPath: '/painel/financeiro'
+      preLoaderRoute: typeof PainelFinanceiroRouteImport
+      parentRoute: typeof PainelRoute
+    }
+    '/painel/ingressos': {
+      id: '/painel/ingressos'
+      path: '/ingressos'
+      fullPath: '/painel/ingressos'
+      preLoaderRoute: typeof PainelIngressosRouteImport
+      parentRoute: typeof PainelRoute
+    }
+    '/painel/inscricoes': {
+      id: '/painel/inscricoes'
+      path: '/inscricoes'
+      fullPath: '/painel/inscricoes'
+      preLoaderRoute: typeof PainelInscricoesRouteImport
+      parentRoute: typeof PainelRoute
+    }
+    '/painel/loja': {
+      id: '/painel/loja'
+      path: '/loja'
+      fullPath: '/painel/loja'
+      preLoaderRoute: typeof PainelLojaRouteImport
+      parentRoute: typeof PainelRoute
+    }
+    '/painel/mensagens': {
+      id: '/painel/mensagens'
+      path: '/mensagens'
+      fullPath: '/painel/mensagens'
+      preLoaderRoute: typeof PainelMensagensRouteImport
+      parentRoute: typeof PainelRoute
+    }
+    '/painel/midia': {
+      id: '/painel/midia'
+      path: '/midia'
+      fullPath: '/painel/midia'
+      preLoaderRoute: typeof PainelMidiaRouteImport
+      parentRoute: typeof PainelRoute
+    }
+    '/painel/momentos': {
+      id: '/painel/momentos'
+      path: '/momentos'
+      fullPath: '/painel/momentos'
+      preLoaderRoute: typeof PainelMomentosRouteImport
+      parentRoute: typeof PainelRoute
+    }
+    '/painel/noticias': {
+      id: '/painel/noticias'
+      path: '/noticias'
+      fullPath: '/painel/noticias'
+      preLoaderRoute: typeof PainelNoticiasRouteImport
+      parentRoute: typeof PainelRoute
+    }
+    '/painel/paginas': {
+      id: '/painel/paginas'
+      path: '/paginas'
+      fullPath: '/painel/paginas'
+      preLoaderRoute: typeof PainelPaginasRouteImport
+      parentRoute: typeof PainelRoute
+    }
+    '/painel/patrocinadores': {
+      id: '/painel/patrocinadores'
+      path: '/patrocinadores'
+      fullPath: '/painel/patrocinadores'
+      preLoaderRoute: typeof PainelPatrocinadoresRouteImport
+      parentRoute: typeof PainelRoute
+    }
+    '/painel/pedidos': {
+      id: '/painel/pedidos'
+      path: '/pedidos'
+      fullPath: '/painel/pedidos'
+      preLoaderRoute: typeof PainelPedidosRouteImport
+      parentRoute: typeof PainelRoute
+    }
+    '/painel/site': {
+      id: '/painel/site'
+      path: '/site'
+      fullPath: '/painel/site'
+      preLoaderRoute: typeof PainelSiteRouteImport
+      parentRoute: typeof PainelRoute
+    }
+    '/painel/usuarios': {
+      id: '/painel/usuarios'
+      path: '/usuarios'
+      fullPath: '/painel/usuarios'
+      preLoaderRoute: typeof PainelUsuariosRouteImport
+      parentRoute: typeof PainelRoute
+    }
+    '/painel_/entrar': {
+      id: '/painel_/entrar'
+      path: '/painel/entrar'
+      fullPath: '/painel/entrar'
+      preLoaderRoute: typeof PainelEntrarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_public/esportes/$id': {
+      id: '/_public/esportes/$id'
+      path: '/$id'
+      fullPath: '/esportes/$id'
+      preLoaderRoute: typeof PublicEsportesIdRouteImport
+      parentRoute: typeof PublicEsportesRoute
+    }
+    '/_public/eventos/$id': {
+      id: '/_public/eventos/$id'
+      path: '/$id'
+      fullPath: '/eventos/$id'
+      preLoaderRoute: typeof PublicEventosIdRouteImport
+      parentRoute: typeof PublicEventosRoute
+    }
+    '/_public/loja/$id': {
+      id: '/_public/loja/$id'
+      path: '/$id'
+      fullPath: '/loja/$id'
+      preLoaderRoute: typeof PublicLojaIdRouteImport
+      parentRoute: typeof PublicLojaRoute
+    }
+    '/_public/momentos/$id': {
+      id: '/_public/momentos/$id'
+      path: '/$id'
+      fullPath: '/momentos/$id'
+      preLoaderRoute: typeof PublicMomentosIdRouteImport
+      parentRoute: typeof PublicMomentosRoute
+    }
+    '/_public/noticias/$id': {
+      id: '/_public/noticias/$id'
+      path: '/$id'
+      fullPath: '/noticias/$id'
+      preLoaderRoute: typeof PublicNoticiasIdRouteImport
+      parentRoute: typeof PublicNoticiasRoute
+    }
+    '/_public/pagina/$slug': {
+      id: '/_public/pagina/$slug'
+      path: '/pagina/$slug'
+      fullPath: '/pagina/$slug'
+      preLoaderRoute: typeof PublicPaginaSlugRouteImport
+      parentRoute: typeof PublicRoute
     }
     '/api/public/asaas-webhook': {
       id: '/api/public/asaas-webhook'
@@ -85,8 +1042,184 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface PublicEsportesRouteChildren {
+  PublicEsportesIdRoute: typeof PublicEsportesIdRoute
+}
+
+const PublicEsportesRouteChildren: PublicEsportesRouteChildren = {
+  PublicEsportesIdRoute: PublicEsportesIdRoute,
+}
+
+const PublicEsportesRouteWithChildren = PublicEsportesRoute._addFileChildren(
+  PublicEsportesRouteChildren,
+)
+
+interface PublicEventosRouteChildren {
+  PublicEventosIdRoute: typeof PublicEventosIdRoute
+}
+
+const PublicEventosRouteChildren: PublicEventosRouteChildren = {
+  PublicEventosIdRoute: PublicEventosIdRoute,
+}
+
+const PublicEventosRouteWithChildren = PublicEventosRoute._addFileChildren(
+  PublicEventosRouteChildren,
+)
+
+interface PublicLojaRouteChildren {
+  PublicLojaIdRoute: typeof PublicLojaIdRoute
+}
+
+const PublicLojaRouteChildren: PublicLojaRouteChildren = {
+  PublicLojaIdRoute: PublicLojaIdRoute,
+}
+
+const PublicLojaRouteWithChildren = PublicLojaRoute._addFileChildren(
+  PublicLojaRouteChildren,
+)
+
+interface PublicMomentosRouteChildren {
+  PublicMomentosIdRoute: typeof PublicMomentosIdRoute
+}
+
+const PublicMomentosRouteChildren: PublicMomentosRouteChildren = {
+  PublicMomentosIdRoute: PublicMomentosIdRoute,
+}
+
+const PublicMomentosRouteWithChildren = PublicMomentosRoute._addFileChildren(
+  PublicMomentosRouteChildren,
+)
+
+interface PublicNoticiasRouteChildren {
+  PublicNoticiasIdRoute: typeof PublicNoticiasIdRoute
+}
+
+const PublicNoticiasRouteChildren: PublicNoticiasRouteChildren = {
+  PublicNoticiasIdRoute: PublicNoticiasIdRoute,
+}
+
+const PublicNoticiasRouteWithChildren = PublicNoticiasRoute._addFileChildren(
+  PublicNoticiasRouteChildren,
+)
+
+interface PublicRouteChildren {
+  PublicAtleticaRoute: typeof PublicAtleticaRoute
+  PublicBuscaRoute: typeof PublicBuscaRoute
+  PublicCalendarioRoute: typeof PublicCalendarioRoute
+  PublicCarrinhoRoute: typeof PublicCarrinhoRoute
+  PublicContatoRoute: typeof PublicContatoRoute
+  PublicEsportesRoute: typeof PublicEsportesRouteWithChildren
+  PublicEventosRoute: typeof PublicEventosRouteWithChildren
+  PublicFaqRoute: typeof PublicFaqRoute
+  PublicLojaRoute: typeof PublicLojaRouteWithChildren
+  PublicMomentosRoute: typeof PublicMomentosRouteWithChildren
+  PublicNoticiasRoute: typeof PublicNoticiasRouteWithChildren
+  PublicPatrocinadoresRoute: typeof PublicPatrocinadoresRoute
+  PublicSejaPatrocinadorRoute: typeof PublicSejaPatrocinadorRoute
+  PublicPaginaSlugRoute: typeof PublicPaginaSlugRoute
+}
+
+const PublicRouteChildren: PublicRouteChildren = {
+  PublicAtleticaRoute: PublicAtleticaRoute,
+  PublicBuscaRoute: PublicBuscaRoute,
+  PublicCalendarioRoute: PublicCalendarioRoute,
+  PublicCarrinhoRoute: PublicCarrinhoRoute,
+  PublicContatoRoute: PublicContatoRoute,
+  PublicEsportesRoute: PublicEsportesRouteWithChildren,
+  PublicEventosRoute: PublicEventosRouteWithChildren,
+  PublicFaqRoute: PublicFaqRoute,
+  PublicLojaRoute: PublicLojaRouteWithChildren,
+  PublicMomentosRoute: PublicMomentosRouteWithChildren,
+  PublicNoticiasRoute: PublicNoticiasRouteWithChildren,
+  PublicPatrocinadoresRoute: PublicPatrocinadoresRoute,
+  PublicSejaPatrocinadorRoute: PublicSejaPatrocinadorRoute,
+  PublicPaginaSlugRoute: PublicPaginaSlugRoute,
+}
+
+const PublicRouteWithChildren =
+  PublicRoute._addFileChildren(PublicRouteChildren)
+
+interface StudentRouteChildren {
+  StudentMeusIngressosRoute: typeof StudentMeusIngressosRoute
+  StudentMinhaAreaRoute: typeof StudentMinhaAreaRoute
+}
+
+const StudentRouteChildren: StudentRouteChildren = {
+  StudentMeusIngressosRoute: StudentMeusIngressosRoute,
+  StudentMinhaAreaRoute: StudentMinhaAreaRoute,
+}
+
+const StudentRouteWithChildren =
+  StudentRoute._addFileChildren(StudentRouteChildren)
+
+interface AdminRouteChildren {
+  AdminEntrarRoute: typeof AdminEntrarRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminEntrarRoute: AdminEntrarRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
+interface PainelRouteChildren {
+  PainelCheckinRoute: typeof PainelCheckinRoute
+  PainelConfiguracoesRoute: typeof PainelConfiguracoesRoute
+  PainelDiretoriaRoute: typeof PainelDiretoriaRoute
+  PainelEsportesRoute: typeof PainelEsportesRoute
+  PainelEventosRoute: typeof PainelEventosRoute
+  PainelFinanceiroRoute: typeof PainelFinanceiroRoute
+  PainelIngressosRoute: typeof PainelIngressosRoute
+  PainelInscricoesRoute: typeof PainelInscricoesRoute
+  PainelLojaRoute: typeof PainelLojaRoute
+  PainelMensagensRoute: typeof PainelMensagensRoute
+  PainelMidiaRoute: typeof PainelMidiaRoute
+  PainelMomentosRoute: typeof PainelMomentosRoute
+  PainelNoticiasRoute: typeof PainelNoticiasRoute
+  PainelPaginasRoute: typeof PainelPaginasRoute
+  PainelPatrocinadoresRoute: typeof PainelPatrocinadoresRoute
+  PainelPedidosRoute: typeof PainelPedidosRoute
+  PainelSiteRoute: typeof PainelSiteRoute
+  PainelUsuariosRoute: typeof PainelUsuariosRoute
+  PainelIndexRoute: typeof PainelIndexRoute
+}
+
+const PainelRouteChildren: PainelRouteChildren = {
+  PainelCheckinRoute: PainelCheckinRoute,
+  PainelConfiguracoesRoute: PainelConfiguracoesRoute,
+  PainelDiretoriaRoute: PainelDiretoriaRoute,
+  PainelEsportesRoute: PainelEsportesRoute,
+  PainelEventosRoute: PainelEventosRoute,
+  PainelFinanceiroRoute: PainelFinanceiroRoute,
+  PainelIngressosRoute: PainelIngressosRoute,
+  PainelInscricoesRoute: PainelInscricoesRoute,
+  PainelLojaRoute: PainelLojaRoute,
+  PainelMensagensRoute: PainelMensagensRoute,
+  PainelMidiaRoute: PainelMidiaRoute,
+  PainelMomentosRoute: PainelMomentosRoute,
+  PainelNoticiasRoute: PainelNoticiasRoute,
+  PainelPaginasRoute: PainelPaginasRoute,
+  PainelPatrocinadoresRoute: PainelPatrocinadoresRoute,
+  PainelPedidosRoute: PainelPedidosRoute,
+  PainelSiteRoute: PainelSiteRoute,
+  PainelUsuariosRoute: PainelUsuariosRoute,
+  PainelIndexRoute: PainelIndexRoute,
+}
+
+const PainelRouteWithChildren =
+  PainelRoute._addFileChildren(PainelRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  PublicRoute: PublicRouteWithChildren,
+  StudentRoute: StudentRouteWithChildren,
+  AdminRoute: AdminRouteWithChildren,
+  ForgotPasswordRoute: ForgotPasswordRoute,
+  LoginRoute: LoginRoute,
+  PainelRoute: PainelRouteWithChildren,
+  RegisterRoute: RegisterRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
+  PainelEntrarRoute: PainelEntrarRoute,
   ApiPublicAsaasWebhookRoute: ApiPublicAsaasWebhookRoute,
   ApiPublicFilesSplatRoute: ApiPublicFilesSplatRoute,
 }

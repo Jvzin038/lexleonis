@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import Page from "@/views/NoticiaDetalhe";
 
-export const Route = createFileRoute("/_public/noticias/$id")({
+export const Route = createFileRoute("/_public/noticias_/$id")({
   head: () => ({
     meta: [
       { title: "Notícia • Atlética Lex Leonis" },
