@@ -1879,6 +1879,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      entity_update_many: {
+        Args: { filter: Json; inc_values: Json; set_values: Json; t: string }
+        Returns: number
+      }
       is_admin: { Args: never; Returns: boolean }
     }
     Enums: {

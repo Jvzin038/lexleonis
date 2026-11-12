@@ -8,6 +8,13 @@
       "when": 1794523599704,
       "tag": "0000_base44_schema",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1794523757142,
+      "tag": "0001_admin_reads_and_update_many",
+      "breakpoints": true
     }
   ]
 }
