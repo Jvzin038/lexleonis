@@ -7,7 +7,7 @@ import SiteHeader from './SiteHeader';
 import SiteFooter from './SiteFooter';
 import MaintenanceNotice from './MaintenanceNotice';
 
-export default function PublicLayout() {
+export default function PublicLayout({ children }) {
   const { settings } = useSite();
   const { isStaff } = useStaff();
   const [legalPages, setLegalPages] = useState([]);
@@ -47,7 +47,7 @@ export default function PublicLayout() {
       <SiteHeader />
 
       <main id="conteudo" className="flex-1">
-        {maintenance ? <MaintenanceNotice /> : <Outlet />}
+        {maintenance ? <MaintenanceNotice /> : (children ?? <Outlet />)}
       </main>
 
       {!maintenance && <SiteFooter legalPages={legalPages} />}
