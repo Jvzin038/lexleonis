@@ -33,3 +33,4 @@ use the editor.
 - Legacy Base44 pages live in `src/views` and use `src/lib/router-compat.jsx` and `src/api/base44Client.js`; keep that compatibility layer instead of rewriting pages, so ported screens keep working unchanged.
 - Former Base44 backend functions live in `src/backend/b44` and run only through `src/backend/invoke.functions.ts`; never import `src/backend` from client code (import protection).
 - Imported Base44 users are linked on first verified sign-in via `legacy_user_map` in `src/backend/account.functions.ts`; never link by client-supplied IDs.
+- AI features (Claude via Lovable AI Gateway native Messages) go through `src/routes/api/public/ai.ts`; staff modes verify the bearer and permission there, and the public assistant reads only published data.
