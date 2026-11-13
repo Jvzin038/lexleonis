@@ -64,6 +64,7 @@ async function handleStoreOrder(base44, user, body, action, orderId) {
       pix_expires_at: pix.pix_expires_at,
       payment_status: "pending",
       status: "awaiting_payment",
+      payment_method: "pix",
       reservation_expires_at: reservationExpiresAt
     });
     return Response.json({
@@ -72,6 +73,7 @@ async function handleStoreOrder(base44, user, body, action, orderId) {
       pix_qr_code: pix.pix_qr_code,
       pix_copy_paste: pix.pix_copy_paste,
       pix_expires_at: pix.pix_expires_at,
+      reservation_expires_at: reservationExpiresAt,
       payment_intent_id: pix.id
     });
   }
@@ -133,7 +135,9 @@ async function handleStoreOrder(base44, user, body, action, orderId) {
     status: "pending",
     pix_qr_code: order.pix_qr_code || "",
     pix_copy_paste: order.pix_copy_paste || "",
-    pix_expires_at: order.pix_expires_at || ""
+    pix_expires_at: order.pix_expires_at || "",
+    reservation_expires_at: order.reservation_expires_at || "",
+    invoice_url: order.payment_method === "card" ? payment.invoiceUrl || "" : ""
   });
 }
 export default async function input_default(req) {
@@ -199,7 +203,8 @@ export default async function input_default(req) {
         pix_copy_paste: pix.pix_copy_paste,
         pix_expires_at: pix.pix_expires_at,
         payment_status: "pending",
-        status: "awaiting_payment"
+        status: "awaiting_payment",
+        payment_method: "pix"
       });
       return Response.json({
         status: "pending",
@@ -207,6 +212,7 @@ export default async function input_default(req) {
         pix_qr_code: pix.pix_qr_code,
         pix_copy_paste: pix.pix_copy_paste,
         pix_expires_at: pix.pix_expires_at,
+        reservation_expires_at: registration.reservation_expires_at || "",
         payment_intent_id: pix.id
       });
     }
@@ -273,7 +279,9 @@ export default async function input_default(req) {
       status: "pending",
       pix_qr_code: registration.pix_qr_code || "",
       pix_copy_paste: registration.pix_copy_paste || "",
-      pix_expires_at: registration.pix_expires_at || ""
+      pix_expires_at: registration.pix_expires_at || "",
+      reservation_expires_at: registration.reservation_expires_at || "",
+      invoice_url: registration.payment_method === "card" ? payment.invoiceUrl || "" : ""
     });
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
