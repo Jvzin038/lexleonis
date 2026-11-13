@@ -65,7 +65,7 @@ export default function SiteHeader() {
       <div className="site-container flex h-16 items-center justify-between gap-2 sm:h-20 sm:gap-4">
         {brand}
 
-        <nav className="hidden items-center gap-1 lg:flex" aria-label="Navegação principal">
+        <nav className="hidden items-center gap-1 xl:flex" aria-label="Navegação principal">
           {navItems.map((item) =>
             item.external ? (
               <a
@@ -73,7 +73,7 @@ export default function SiteHeader() {
                 href={item.path}
                 target="_blank"
                 rel="noreferrer"
-                className="rounded-full px-3 py-2 text-sm font-medium text-white/80 transition-colors hover:bg-white/10 hover:text-white"
+                className="rounded-full px-2 py-2 text-xs font-medium text-white/80 transition-colors hover:bg-white/10 hover:text-white"
               >
                 {item.label}
               </a>
@@ -82,7 +82,7 @@ export default function SiteHeader() {
                 key={item.id}
                 to={item.path}
                 className={({ isActive }) =>
-                  `rounded-full px-3 py-2 text-sm font-medium transition-colors ${
+                  `rounded-full px-2 py-2 text-xs font-medium transition-colors ${
                     isActive ? 'bg-white/10 text-brand-gold' : 'text-white/80 hover:bg-white/10 hover:text-white'
                   }`
                 }
@@ -138,7 +138,7 @@ export default function SiteHeader() {
               <button
                 type="button"
                 aria-label="Abrir menu"
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 text-white lg:hidden"
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 text-white xl:hidden"
               >
                 <Menu className="h-5 w-5" />
               </button>
