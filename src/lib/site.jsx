@@ -132,12 +132,5 @@ export function useSite() {
 
 export function useNav(location) {
   const { navItems } = useSite();
-  return useMemo(
-    () =>
-      navItems
-        .filter((item) => (location ? item.location === location : true))
-        .slice()
-        .sort((a, b) => (a.order ?? 0) - (b.order ?? 0)),
-    [navItems, location],
-  );
+  return useMemo(() => getNavItems(navItems, location), [navItems, location]);
 }
