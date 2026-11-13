@@ -5,6 +5,13 @@ import TicketZoom from '@/components/student/TicketZoom';
 import { formatDate, formatTime } from '@/lib/format';
 import { ticketValidityLabel } from '@/lib/orderStatus';
 
+function maskCpf(value) {
+  const digits = String(value || '').replace(/\D/g, '');
+  if (digits.length === 11) return `***.${digits.slice(3, 6)}.${digits.slice(6, 9)}-**`;
+  if (digits.length > 4) return `${'*'.repeat(digits.length - 4)}${digits.slice(-4)}`;
+  return digits ? '***' : '';
+}
+
 function Detail({ icon: Icon, label, value }) {
   return (
     <div className="flex items-start gap-2">
@@ -73,7 +80,7 @@ export default function TicketCard({ ticket }) {
               <Detail icon={MapPin} label="Local" value={ticket.event_location} />
             </div>
             {ticket.participant_cpf && (
-              <Detail icon={UserRound} label="CPF" value={ticket.participant_cpf} />
+              <Detail icon={UserRound} label="CPF" value={maskCpf(ticket.participant_cpf)} />
             )}
             {ticket.participant_email && (
               <Detail icon={UserRound} label="E-mail" value={ticket.participant_email} />
