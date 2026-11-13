@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Link } from '@/lib/router-compat';
-import { AlertCircle, CheckCircle2, Clock, Copy, Loader2, RefreshCw } from 'lucide-react';
+import { AlertCircle, CheckCircle2, Clock, Copy, CreditCard, Loader2, RefreshCw } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { Button } from '@/components/ui/button';
 
@@ -166,7 +166,7 @@ export default function PixPaymentPanel({ registrationId, initialPix, onConfirme
       <div className="rounded-2xl border border-amber-200 bg-amber-50 p-6">
         <AlertCircle className="h-8 w-8 text-amber-700" />
         <p className="mt-3 font-heading text-sm uppercase tracking-[0.16em] text-amber-900">
-          Cobrança Pix expirada
+          Cobrança expirada
         </p>
         <p className="mt-2 text-sm text-amber-900/85">
           O prazo para pagamento acabou. Gere uma nova cobrança para continuar com a compra.
@@ -183,10 +183,44 @@ export default function PixPaymentPanel({ registrationId, initialPix, onConfirme
             </>
           ) : (
             <>
-              <RefreshCw className="mr-2 h-4 w-4" /> Gerar nova cobrança
+              <RefreshCw className="mr-2 h-4 w-4" /> Gerar cobrança Pix
             </>
           )}
         </Button>
+      </div>
+    );
+  }
+
+  if (pix.invoice_url) {
+    return (
+      <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+        <div className="flex items-center gap-2">
+          <CreditCard className="h-5 w-5 text-brand-primary" />
+          <p className="font-heading text-sm uppercase tracking-[0.16em] text-brand-deep">
+            Pagamento com cartão
+          </p>
+        </div>
+        <p className="mt-3 text-sm text-slate-600">
+          Finalize o pagamento na página segura do Asaas, aberta em uma nova aba. Os dados do cartão são
+          digitados lá, nunca neste site.
+        </p>
+        <a
+          href={pix.invoice_url}
+          target="_blank"
+          rel="noreferrer"
+          className="mt-5 inline-flex w-full items-center justify-center rounded-full bg-brand-gold px-5 py-3 text-sm font-semibold text-brand-ink hover:bg-brand-gold/90"
+        >
+          <CreditCard className="mr-2 h-4 w-4" /> Abrir página de pagamento
+        </a>
+        {expiresIn && (
+          <p className="mt-4 flex items-center justify-center gap-1.5 text-xs font-medium text-amber-700">
+            <Clock className="h-3.5 w-3.5" /> Reserva expira em {expiresIn}
+          </p>
+        )}
+        <div className="mt-5 flex items-center gap-2 rounded-xl bg-brand-soft p-3 text-xs leading-relaxed text-brand-deep">
+          <Loader2 className="h-4 w-4 shrink-0 animate-spin" />
+          <span>Aguardando a aprovação do cartão… Esta página atualiza sozinha quando o pagamento for confirmado.</span>
+        </div>
       </div>
     );
   }
