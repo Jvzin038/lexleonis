@@ -182,18 +182,17 @@ export async function releaseReservation(base44, registration) {
     return;
   await releaseQuantity(base44, registration.ticket_type_id, Math.max(1, Number(registration.quantity || 1)));
 }
-export function verifyAsaasWebhookOrigin(req, payload) {
+function tokenDigest(value) {
+  return createHash("sha256").update(String(value)).digest();
+}
+// Aceita o webhook somente quando o header asaas-access-token bate com o
+// ASAAS_WEBHOOK_TOKEN configurado. Nada do corpo da requisição é confiável.
+export function verifyAsaasWebhookOrigin(req) {
   const webhookToken = secrets.get("ASAAS_WEBHOOK_TOKEN");
-  if (webhookToken) {
-    const headerToken = req.headers.get("asaas-access-token");
-    if (headerToken && headerToken === webhookToken)
-      return true;
-  }
-  const walletId = asaasWalletId();
-  if (walletId) {
-    const accountWalletId = payload?.account?.id;
-    if (accountWalletId && accountWalletId === walletId)
-      return true;
-  }
-  return false;
+  if (!webhookToken)
+    return false;
+  const headerToken = req.headers.get("asaas-access-token");
+  if (!headerToken)
+    return false;
+  return timingSafeEqual(tokenDigest(headerToken), tokenDigest(webhookToken));
 }
