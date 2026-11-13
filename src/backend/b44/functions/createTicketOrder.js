@@ -208,7 +208,8 @@ export default async function input_default(req) {
           buyerName,
           buyerEmail,
           buyerCpf,
-          buyerPhone
+          buyerPhone,
+          successUrl: `${new URL(req.url).origin}/meus-ingressos`
         });
         const cardReservationExpiresAt = new Date(Date.now() + 30 * 60 * 1000).toISOString();
         await base44.asServiceRole.entities.Registration.update(registration.id, {
