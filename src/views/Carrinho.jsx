@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from '@/lib/router-compat';
-import { Loader2, MapPin, Minus, Plus, ShoppingBag, Store, Trash2 } from 'lucide-react';
+import { CreditCard, Loader2, MapPin, Minus, Plus, ShoppingBag, Store, Trash2 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -69,7 +69,7 @@ export default function Carrinho() {
     return '';
   };
 
-  const submit = async () => {
+  const submit = async (method = 'pix') => {
     const validationError = validate();
     if (validationError) {
       setError(validationError);
@@ -77,6 +77,8 @@ export default function Carrinho() {
     }
     setError('');
     setSubmitting(true);
+    // A aba é aberta já no clique para o navegador não bloquear o pop-up.
+    const payWindow = method === 'card' ? window.open('', '_blank') : null;
     try {
       const response = await base44.functions.invoke('createStoreOrder', {
         items: items.map((item) => ({
@@ -89,6 +91,7 @@ export default function Carrinho() {
         })),
         phone,
         buyer_cpf: cpf,
+        payment_method: method,
         note,
         fulfillment_method: fulfillment,
         shipping_zip: fulfillment === 'delivery' ? address.zip : '',
@@ -101,6 +104,7 @@ export default function Carrinho() {
       });
       const data = response.data || {};
       if (data.error) {
+        payWindow?.close();
         setError(data.error);
         return;
       }
@@ -109,9 +113,14 @@ export default function Carrinho() {
         pix_qr_code: data.pix_qr_code || '',
         pix_copy_paste: data.pix_copy_paste || '',
         pix_expires_at: data.pix_expires_at || '',
+        reservation_expires_at: data.reservation_expires_at || '',
+        invoice_url: data.invoice_url || '',
       });
+      if (payWindow && data.invoice_url) payWindow.location.href = data.invoice_url;
+      else payWindow?.close();
       clear();
     } catch (submitError) {
+      payWindow?.close();
       setError(
         submitError?.response?.data?.error ||
           'Não foi possível registrar o pedido agora. Tente novamente em instantes.',
@@ -125,7 +134,7 @@ export default function Carrinho() {
   if (order && pixData) {
     return (
       <div>
-        <PageHero eyebrow="Loja oficial" title="Pagamento do pedido" subtitle="Pague o Pix para confirmar sua compra." />
+        <PageHero eyebrow="Loja oficial" title="Pagamento do pedido" subtitle="Conclua o pagamento para confirmar sua compra." />
         <section className="site-container py-12">
           <div className="mx-auto max-w-xl">
             <div className="mb-6 rounded-2xl border border-slate-200 bg-white p-5 text-sm">
@@ -155,7 +164,7 @@ export default function Carrinho() {
       <PageHero
         eyebrow="Loja oficial"
         title="Meu carrinho"
-        subtitle="Revise os itens, escolha entrega ou retirada e pague com Pix."
+        subtitle="Revise os itens, escolha entrega ou retirada e pague com Pix ou cartão."
       />
 
       <section className="site-container py-12">
@@ -406,14 +415,15 @@ export default function Carrinho() {
                 {error && <p className="mt-4 text-sm font-medium text-red-600">{error}</p>}
 
                 {isAuthenticated ? (
+                  <>
                   <Button
-                    onClick={submit}
+                    onClick={() => submit('pix')}
                     disabled={submitting}
                     className="mt-6 w-full rounded-full bg-brand-gold py-6 text-sm font-bold text-brand-ink hover:bg-brand-gold/90"
                   >
                     {submitting ? (
                       <>
-                        <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Gerando cobrança Pix…
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Gerando cobrança…
                       </>
                     ) : (
                       <>
@@ -421,6 +431,15 @@ export default function Carrinho() {
                       </>
                     )}
                   </Button>
+                  <Button
+                    variant="outline"
+                    onClick={() => submit('card')}
+                    disabled={submitting}
+                    className="mt-3 w-full rounded-full border-brand-deep py-6 text-sm font-bold text-brand-deep"
+                  >
+                    <CreditCard className="mr-2 h-4 w-4" /> Pagar com cartão
+                  </Button>
+                  </>
                 ) : (
                   <Link
                     to={`/login?returnTo=${encodeURIComponent('/carrinho')}`}
@@ -431,7 +450,7 @@ export default function Carrinho() {
                 )}
 
                 <p className="mt-4 text-xs leading-relaxed text-slate-400">
-                  Ao confirmar, a cobrança Pix é gerada. O pedido é confirmado automaticamente após o
+                  Ao confirmar, a cobrança (Pix ou cartão) é gerada. O pedido é confirmado automaticamente após o
                   pagamento — nunca por clicar em um botão.
                 </p>
               </div>
