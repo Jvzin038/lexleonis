@@ -73,7 +73,7 @@ export default function SiteHeader() {
                 href={item.path}
                 target="_blank"
                 rel="noreferrer"
-                className="rounded-full px-3 py-2 text-sm font-medium text-white/80 transition-colors hover:bg-white/10 hover:text-white"
+                className="rounded-full px-2 py-2 text-xs font-medium text-white/80 transition-colors hover:bg-white/10 hover:text-white"
               >
                 {item.label}
               </a>
@@ -82,7 +82,7 @@ export default function SiteHeader() {
                 key={item.id}
                 to={item.path}
                 className={({ isActive }) =>
-                  `rounded-full px-3 py-2 text-sm font-medium transition-colors ${
+                  `rounded-full px-2 py-2 text-xs font-medium transition-colors ${
                     isActive ? 'bg-white/10 text-brand-gold' : 'text-white/80 hover:bg-white/10 hover:text-white'
                   }`
                 }
