@@ -77,6 +77,33 @@ export async function createAsaasPixPayment(params) {
     pix_expires_at: qrCode.expirationDate ? new Date(qrCode.expirationDate).toISOString() : ""
   };
 }
+// Cobrança paga pela página do Asaas (invoiceUrl). Os dados do cartão são
+// digitados no Asaas, nunca passam pelo site.
+export async function createAsaasCardPayment(params) {
+  const customer = await findOrCreateCustomer({
+    name: params.buyerName,
+    cpfCnpj: params.buyerCpf,
+    email: params.buyerEmail,
+    phone: params.buyerPhone,
+    externalReference: params.registrationId
+  });
+  const value = Number(params.amount);
+  if (!value || value <= 0)
+    throw new Error("Valor da cobrança inválido.");
+  const dueDateStr = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
+  const payment = await asaasRequest("/v3/payments", {
+    method: "POST",
+    body: JSON.stringify({
+      customer: customer.id,
+      billingType: "CREDIT_CARD",
+      value: Number(value.toFixed(2)),
+      dueDate: dueDateStr,
+      description: String(params.description || "").slice(0, 500),
+      externalReference: String(params.registrationId || "")
+    })
+  });
+  return { id: payment.id, invoice_url: payment.invoiceUrl || "" };
+}
 export async function retrieveAsaasPayment(paymentId) {
   return asaasRequest(`/v3/payments/${paymentId}`);
 }
@@ -101,13 +128,13 @@ export async function processAsaasPaymentSuccess(base44, paymentId) {
   const updated = await base44.asServiceRole.entities.Registration.update(registration.id, {
     status: "confirmed",
     payment_status: "confirmed",
-    payment_method: "pix",
+    payment_method: registration.payment_method === "card" ? "card" : "pix",
     payment_provider: "asaas",
     confirmed_at: stamp
   });
   const tickets = await issueTicketsForRegistration(base44, updated);
   await base44.asServiceRole.entities.AdminLog.create({
-    action: "Pagamento Pix confirmado (Asaas)",
+    action: registration.payment_method === "card" ? "Pagamento com cartão confirmado (Asaas)" : "Pagamento Pix confirmado (Asaas)",
     module: "Ingressos",
     record_label: registration.order_number || registration.id,
     details: `${tickets.length} ingresso(s) emitido(s). Cobrança Asaas: ${paymentId}`
@@ -142,12 +169,12 @@ export async function processAsaasStoreOrderSuccess(base44, paymentId) {
   const updated = await base44.asServiceRole.entities.Order.update(order.id, {
     status: "paid",
     payment_status: "confirmed",
-    payment_method: "pix",
+    payment_method: order.payment_method === "card" ? "card" : "pix",
     payment_provider: "asaas",
     confirmed_at: stamp
   });
   await base44.asServiceRole.entities.AdminLog.create({
-    action: "Pagamento Pix confirmado (Asaas) — Loja",
+    action: order.payment_method === "card" ? "Pagamento com cartão confirmado (Asaas) — Loja" : "Pagamento Pix confirmado (Asaas) — Loja",
     module: "Pedidos da loja",
     record_label: order.order_number || order.id,
     details: `Cobrança Asaas: ${paymentId}`
