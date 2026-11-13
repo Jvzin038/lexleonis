@@ -38,11 +38,12 @@ export default function PixPaymentPanel({ registrationId, initialPix, onConfirme
       }
 
       if (data.pix_qr_code && data.pix_qr_code !== pix.pix_qr_code) {
-        setPix({
+        setPix((current) => ({
           pix_qr_code: data.pix_qr_code,
           pix_copy_paste: data.pix_copy_paste,
           pix_expires_at: data.pix_expires_at,
-        });
+          reservation_expires_at: data.reservation_expires_at || current.reservation_expires_at,
+        }));
       }
     } catch (err) {
       // keep polling
@@ -64,11 +65,12 @@ export default function PixPaymentPanel({ registrationId, initialPix, onConfirme
       });
       const data = response.data || {};
       if (data.status === 'pending') {
-        setPix({
+        setPix((current) => ({
           pix_qr_code: data.pix_qr_code,
           pix_copy_paste: data.pix_copy_paste,
           pix_expires_at: data.pix_expires_at,
-        });
+          reservation_expires_at: data.reservation_expires_at || current.reservation_expires_at,
+        }));
         setStatus('pending');
         startPolling();
       } else if (data.error) {
@@ -98,26 +100,38 @@ export default function PixPaymentPanel({ registrationId, initialPix, onConfirme
     };
   }, [startPolling]);
 
+  // A reserva do ingresso (30 min) vence antes do QR Code do Asaas, então o
+  // prazo mostrado é o menor dos dois.
+  const deadline = [pix.pix_expires_at, pix.reservation_expires_at]
+    .map((value) => (value ? new Date(value).getTime() : NaN))
+    .filter((time) => Number.isFinite(time))
+    .reduce((min, time) => Math.min(min, time), Infinity);
+
   useEffect(() => {
-    if (!pix.pix_expires_at) return;
+    if (!Number.isFinite(deadline)) return;
     const update = () => {
-      const diff = new Date(pix.pix_expires_at).getTime() - Date.now();
+      const diff = deadline - Date.now();
       if (diff <= 0) {
         setExpiresIn(null);
         if (status === 'pending') setStatus('expired');
         if (countdownRef.current) clearInterval(countdownRef.current);
         return;
       }
-      const mins = Math.floor(diff / 60000);
+      const hours = Math.floor(diff / 3600000);
+      const mins = Math.floor((diff % 3600000) / 60000);
       const secs = Math.floor((diff % 60000) / 1000);
-      setExpiresIn(`${mins}:${String(secs).padStart(2, '0')}`);
+      setExpiresIn(
+        hours > 0
+          ? `${hours}h${String(mins).padStart(2, '0')}`
+          : `${mins}:${String(secs).padStart(2, '0')}`,
+      );
     };
     update();
     countdownRef.current = setInterval(update, 1000);
     return () => {
       if (countdownRef.current) clearInterval(countdownRef.current);
     };
-  }, [pix.pix_expires_at, status]);
+  }, [deadline, status]);
 
   if (status === 'confirmed') {
     return (
