@@ -138,7 +138,7 @@ export default function SiteHeader() {
               <button
                 type="button"
                 aria-label="Abrir menu"
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 text-white lg:hidden"
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 text-white xl:hidden"
               >
                 <Menu className="h-5 w-5" />
               </button>
