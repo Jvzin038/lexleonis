@@ -30,7 +30,7 @@ export default function AdminEsportes() {
   const withSportName = (payload) => ({ ...payload, sport_name: sportMap[payload.sport_id] || payload.sport_name || '' });
 
   return (
-    <Tabs defaultValue="modalidades">
+    <Tabs defaultValue="modalidades" onValueChange={() => loadSports()}>
       <TabsList className="flex h-auto w-full flex-wrap justify-start gap-2 bg-transparent p-0">
         <TabsTrigger value="modalidades" className={TAB_CLASS}>
           Modalidades
@@ -51,6 +51,7 @@ export default function AdminEsportes() {
           title="Modalidades esportivas"
           subtitle="Cadastre novas modalidades sem precisar de desenvolvimento. Cada modalidade tem sua própria página pública."
           entity="Sport"
+          onDataChange={loadSports}
           sort="order"
           searchField="name"
           defaults={{ active: true }}
