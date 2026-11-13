@@ -339,6 +339,7 @@ export default function EntityManager({
       await base44.entities[entity].delete(pendingDelete.id);
       setPendingDelete(null);
       await load();
+      await onDataChange?.();
     } catch (deleteError) {
       setError(deleteError?.message || 'Não foi possível excluir. Tente novamente.');
       setPendingDelete(null);
