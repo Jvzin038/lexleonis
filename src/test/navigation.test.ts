@@ -19,7 +19,7 @@ describe("Navegação padrão", () => {
       "/contato",
     ]);
     expect(items).toHaveLength(DEFAULT_NAV_ITEMS.length);
-    expect(items.every((item) => item.location === "main")).toBe(true);
+    expect(items.every((item: { location: string }) => item.location === "main")).toBe(true);
   });
 
   it("mantém a prioridade dos itens cadastrados pela diretoria", () => {
