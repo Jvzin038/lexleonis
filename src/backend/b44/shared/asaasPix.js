@@ -1,11 +1,9 @@
+import { createHash, timingSafeEqual } from "node:crypto";
 import { secrets } from "../sdk.js";
 import { issueTicketsForRegistration, releaseQuantity } from "./ticketIssue.js";
 const ASAAS_API = "https://api.asaas.com";
 function asaasKey() {
   return secrets.get("ASAAS_API_KEY");
-}
-function asaasWalletId() {
-  return secrets.get("ASAAS_WALLET_ID");
 }
 async function asaasRequest(path, options = {}) {
   const key = asaasKey();

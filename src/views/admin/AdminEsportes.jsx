@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import EntityManager from '@/components/admin/EntityManager';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -16,12 +16,14 @@ const MATCH_STATUS = [
 export default function AdminEsportes() {
   const [sports, setSports] = useState([]);
 
-  useEffect(() => {
-    (async () => {
-      const page = await base44.entities.Sport.filter({}, { sort: 'order', limit: 100 });
-      setSports(page?.items || []);
-    })();
+  const loadSports = useCallback(async () => {
+    const page = await base44.entities.Sport.filter({}, { sort: 'order', limit: 100 });
+    setSports(page?.items || []);
   }, []);
+
+  useEffect(() => {
+    loadSports();
+  }, [loadSports]);
 
   const sportOptions = sports.map((sport) => ({ value: sport.id, label: sport.name }));
   const sportMap = sports.reduce((map, sport) => ({ ...map, [sport.id]: sport.name }), {});

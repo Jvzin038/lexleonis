@@ -227,6 +227,7 @@ export default function EntityManager({
   rowActions,
   headerExtra,
   transform,
+  onDataChange,
 }) {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -324,6 +325,7 @@ export default function EntityManager({
       }
       setFormOpen(false);
       await load();
+      await onDataChange?.();
     } catch (saveError) {
       setError(saveError?.message || 'Não foi possível salvar. Revise os campos e tente novamente.');
     } finally {
