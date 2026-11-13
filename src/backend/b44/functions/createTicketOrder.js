@@ -7,7 +7,7 @@ import {
 } from "../shared/ticketRules.js";
 import { issueTicketsForRegistration, reserveQuantity, releaseQuantity } from "../shared/ticketIssue.js";
 import { uniqueTicketCode } from "../shared/staffAuth.js";
-import { createAsaasPixPayment } from "../shared/asaasPix.js";
+import { createAsaasPixPayment, createAsaasCardPayment } from "../shared/asaasPix.js";
 import { evaluateEventBatches } from "../shared/batchRotation.js";
 function onlyDigits(value) {
   return String(value || "").replace(/\D/g, "");
@@ -29,6 +29,7 @@ export default async function input_default(req) {
     const buyerCpf = String(body.buyer_cpf || "").trim().slice(0, 20);
     const participants = Array.isArray(body.participants) ? body.participants : [];
     const waitlist = body.waitlist === true;
+    const paymentMethod = body.payment_method === "card" ? "card" : "pix";
     if (!eventId) {
       return Response.json({ error: "Selecione o evento." }, { status: 400 });
     }
@@ -170,7 +171,7 @@ export default async function input_default(req) {
       total_amount: price * quantity,
       status: isFree ? "confirmed" : "awaiting_payment",
       payment_status: isFree ? "not_required" : "pending",
-      payment_method: isFree ? "none" : "pix",
+      payment_method: isFree ? "none" : paymentMethod,
       payment_provider: isFree ? "none" : "asaas",
       emission_status: "not_issued",
       code: uniqueTicketCode()
@@ -199,6 +200,34 @@ export default async function input_default(req) {
     }
     try {
       const amount = price * quantity;
+      if (paymentMethod === "card") {
+        const card = await createAsaasCardPayment({
+          amount,
+          registrationId: registration.id,
+          description: `Ingressos — ${event.title} (${orderNumber})`,
+          buyerName,
+          buyerEmail,
+          buyerCpf,
+          buyerPhone
+        });
+        const cardReservationExpiresAt = new Date(Date.now() + 30 * 60 * 1000).toISOString();
+        await base44.asServiceRole.entities.Registration.update(registration.id, {
+          asaas_payment_id: card.id,
+          reservation_expires_at: cardReservationExpiresAt
+        });
+        return Response.json({
+          order: registration,
+          order_number: orderNumber,
+          tickets: [],
+          free: false,
+          card: true,
+          invoice_url: card.invoice_url,
+          payment_intent_id: card.id,
+          reservation_expires_at: cardReservationExpiresAt,
+          open_at: window.openAt ? window.openAt.toISOString() : "",
+          valid_until: window.validUntil ? window.validUntil.toISOString() : ""
+        }, { status: 201 });
+      }
       const pix = await createAsaasPixPayment({
         amount,
         registrationId: registration.id,
@@ -236,7 +265,7 @@ export default async function input_default(req) {
         status: "cancelled",
         payment_status: "cancelled"
       });
-      return Response.json({ error: `Não foi possível gerar a cobrança Pix: ${pixError.message}` }, { status: 500 });
+      return Response.json({ error: `Não foi possível gerar a cobrança: ${pixError.message}` }, { status: 500 });
     }
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
