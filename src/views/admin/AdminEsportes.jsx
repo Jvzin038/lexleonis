@@ -16,12 +16,14 @@ const MATCH_STATUS = [
 export default function AdminEsportes() {
   const [sports, setSports] = useState([]);
 
-  useEffect(() => {
-    (async () => {
-      const page = await base44.entities.Sport.filter({}, { sort: 'order', limit: 100 });
-      setSports(page?.items || []);
-    })();
+  const loadSports = useCallback(async () => {
+    const page = await base44.entities.Sport.filter({}, { sort: 'order', limit: 100 });
+    setSports(page?.items || []);
   }, []);
+
+  useEffect(() => {
+    loadSports();
+  }, [loadSports]);
 
   const sportOptions = sports.map((sport) => ({ value: sport.id, label: sport.name }));
   const sportMap = sports.reduce((map, sport) => ({ ...map, [sport.id]: sport.name }), {});

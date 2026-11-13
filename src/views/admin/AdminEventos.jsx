@@ -36,18 +36,20 @@ export default function AdminEventos() {
   const [categories, setCategories] = useState([]);
   const [ticketTypes, setTicketTypes] = useState([]);
 
-  useEffect(() => {
-    (async () => {
-      const [eventPage, categoryPage, ticketTypePage] = await Promise.all([
-        base44.entities.Event.filter({}, { sort: '-start_date', limit: 300 }),
-        base44.entities.EventCategory.filter({}, { sort: 'order', limit: 100 }),
-        base44.entities.TicketType.filter({}, { sort: 'order', limit: 500 }),
-      ]);
-      setEvents(eventPage?.items || []);
-      setCategories(categoryPage?.items || []);
-      setTicketTypes(ticketTypePage?.items || []);
-    })();
+  const loadData = useCallback(async () => {
+    const [eventPage, categoryPage, ticketTypePage] = await Promise.all([
+      base44.entities.Event.filter({}, { sort: '-start_date', limit: 300 }),
+      base44.entities.EventCategory.filter({}, { sort: 'order', limit: 100 }),
+      base44.entities.TicketType.filter({}, { sort: 'order', limit: 500 }),
+    ]);
+    setEvents(eventPage?.items || []);
+    setCategories(categoryPage?.items || []);
+    setTicketTypes(ticketTypePage?.items || []);
   }, []);
+
+  useEffect(() => {
+    loadData();
+  }, [loadData]);
 
   const eventOptions = events.map((event) => ({ value: event.id, label: event.title }));
   const eventMap = events.reduce((map, event) => ({ ...map, [event.id]: event.title }), {});
