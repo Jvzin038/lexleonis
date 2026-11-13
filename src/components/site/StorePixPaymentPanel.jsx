@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Link } from '@/lib/router-compat';
-import { AlertCircle, CheckCircle2, Clock, Copy, Loader2, RefreshCw } from 'lucide-react';
+import { AlertCircle, CheckCircle2, Clock, Copy, CreditCard, Loader2, RefreshCw } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { Button } from '@/components/ui/button';
 
@@ -36,11 +36,12 @@ export default function StorePixPaymentPanel({ orderId, initialPix, onConfirmed 
       }
 
       if (data.pix_qr_code && data.pix_qr_code !== pix.pix_qr_code) {
-        setPix({
+        setPix((current) => ({
           pix_qr_code: data.pix_qr_code,
           pix_copy_paste: data.pix_copy_paste,
           pix_expires_at: data.pix_expires_at,
-        });
+          reservation_expires_at: data.reservation_expires_at || current.reservation_expires_at,
+        }));
       }
     } catch (err) {
       // keep polling
@@ -62,11 +63,12 @@ export default function StorePixPaymentPanel({ orderId, initialPix, onConfirmed 
       });
       const data = response.data || {};
       if (data.status === 'pending') {
-        setPix({
+        setPix((current) => ({
           pix_qr_code: data.pix_qr_code,
           pix_copy_paste: data.pix_copy_paste,
           pix_expires_at: data.pix_expires_at,
-        });
+          reservation_expires_at: data.reservation_expires_at || current.reservation_expires_at,
+        }));
         setStatus('pending');
         startPolling();
       } else if (data.error) {
@@ -96,26 +98,38 @@ export default function StorePixPaymentPanel({ orderId, initialPix, onConfirmed 
     };
   }, [startPolling]);
 
+  // A reserva (30 min) vence antes do QR Code do Asaas, então o prazo
+  // mostrado é o menor dos dois.
+  const deadline = [pix.pix_expires_at, pix.reservation_expires_at]
+    .map((value) => (value ? new Date(value).getTime() : NaN))
+    .filter((time) => Number.isFinite(time))
+    .reduce((min, time) => Math.min(min, time), Infinity);
+
   useEffect(() => {
-    if (!pix.pix_expires_at) return;
+    if (!Number.isFinite(deadline)) return;
     const update = () => {
-      const diff = new Date(pix.pix_expires_at).getTime() - Date.now();
+      const diff = deadline - Date.now();
       if (diff <= 0) {
         setExpiresIn(null);
         if (status === 'pending') setStatus('expired');
         if (countdownRef.current) clearInterval(countdownRef.current);
         return;
       }
-      const mins = Math.floor(diff / 60000);
+      const hours = Math.floor(diff / 3600000);
+      const mins = Math.floor((diff % 3600000) / 60000);
       const secs = Math.floor((diff % 60000) / 1000);
-      setExpiresIn(`${mins}:${String(secs).padStart(2, '0')}`);
+      setExpiresIn(
+        hours > 0
+          ? `${hours}h${String(mins).padStart(2, '0')}`
+          : `${mins}:${String(secs).padStart(2, '0')}`,
+      );
     };
     update();
     countdownRef.current = setInterval(update, 1000);
     return () => {
       if (countdownRef.current) clearInterval(countdownRef.current);
     };
-  }, [pix.pix_expires_at, status]);
+  }, [deadline, status]);
 
   if (status === 'confirmed') {
     return (
@@ -151,7 +165,7 @@ export default function StorePixPaymentPanel({ orderId, initialPix, onConfirmed 
       <div className="rounded-2xl border border-amber-200 bg-amber-50 p-6">
         <AlertCircle className="h-8 w-8 text-amber-700" />
         <p className="mt-3 font-heading text-sm uppercase tracking-[0.16em] text-amber-900">
-          Cobrança Pix expirada
+          Cobrança expirada
         </p>
         <p className="mt-2 text-sm text-amber-900/85">
           O prazo para pagamento acabou. Gere uma nova cobrança para continuar com a compra.
@@ -164,10 +178,44 @@ export default function StorePixPaymentPanel({ orderId, initialPix, onConfirmed 
             </>
           ) : (
             <>
-              <RefreshCw className="mr-2 h-4 w-4" /> Gerar nova cobrança
+              <RefreshCw className="mr-2 h-4 w-4" /> Gerar cobrança Pix
             </>
           )}
         </Button>
+      </div>
+    );
+  }
+
+  if (pix.invoice_url) {
+    return (
+      <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+        <div className="flex items-center gap-2">
+          <CreditCard className="h-5 w-5 text-brand-primary" />
+          <p className="font-heading text-sm uppercase tracking-[0.16em] text-brand-deep">
+            Pagamento com cartão
+          </p>
+        </div>
+        <p className="mt-3 text-sm text-slate-600">
+          Finalize o pagamento na página segura do Asaas, aberta em uma nova aba. Os dados do cartão são
+          digitados lá, nunca neste site.
+        </p>
+        <a
+          href={pix.invoice_url}
+          target="_blank"
+          rel="noreferrer"
+          className="mt-5 inline-flex w-full items-center justify-center rounded-full bg-brand-gold px-5 py-3 text-sm font-semibold text-brand-ink hover:bg-brand-gold/90"
+        >
+          <CreditCard className="mr-2 h-4 w-4" /> Abrir página de pagamento
+        </a>
+        {expiresIn && (
+          <p className="mt-4 flex items-center justify-center gap-1.5 text-xs font-medium text-amber-700">
+            <Clock className="h-3.5 w-3.5" /> Reserva expira em {expiresIn}
+          </p>
+        )}
+        <div className="mt-5 flex items-center gap-2 rounded-xl bg-brand-soft p-3 text-xs leading-relaxed text-brand-deep">
+          <Loader2 className="h-4 w-4 shrink-0 animate-spin" />
+          <span>Aguardando a aprovação do cartão… Esta página atualiza sozinha quando o pagamento for confirmado.</span>
+        </div>
       </div>
     );
   }
