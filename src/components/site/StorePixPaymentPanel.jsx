@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Link } from '@/lib/router-compat';
+import { Link, useNavigate } from '@/lib/router-compat';
 import { AlertCircle, CheckCircle2, Clock, Copy, CreditCard, Loader2, RefreshCw } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { Button } from '@/components/ui/button';
@@ -131,6 +131,14 @@ export default function StorePixPaymentPanel({ orderId, initialPix, onConfirmed 
     };
   }, [deadline, status]);
 
+  const navigate = useNavigate();
+  // Depois do pagamento confirmado, leva o comprador sozinho para os pedidos.
+  useEffect(() => {
+    if (status !== 'confirmed') return undefined;
+    const timer = setTimeout(() => navigate('/minha-area'), 4000);
+    return () => clearTimeout(timer);
+  }, [status, navigate]);
+
   if (status === 'confirmed') {
     return (
       <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-6">
@@ -139,7 +147,7 @@ export default function StorePixPaymentPanel({ orderId, initialPix, onConfirmed 
           Pagamento confirmado!
         </p>
         <p className="mt-2 text-sm text-emerald-900/85">
-          Seu pedido foi pago com sucesso. A diretoria vai preparar os produtos e entrar em contato
+          Seu pedido foi pago com sucesso e em instantes você vai para Minha Área. A diretoria vai preparar os produtos e entrar em contato
           sobre a {onConfirmed ? 'entrega' : 'retirada'}.
         </p>
         <div className="mt-5 flex flex-wrap gap-3">
