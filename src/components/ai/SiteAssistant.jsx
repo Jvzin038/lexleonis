@@ -67,7 +67,7 @@ export default function SiteAssistant() {
                 {m.pending && !m.content ? (
                   <span className="inline-flex gap-1 py-2" aria-label="Digitando"><span className="h-1.5 w-1.5 animate-bounce rounded-full bg-slate-400" /><span className="h-1.5 w-1.5 animate-bounce rounded-full bg-slate-400 [animation-delay:120ms]" /><span className="h-1.5 w-1.5 animate-bounce rounded-full bg-slate-400 [animation-delay:240ms]" /></span>
                 ) : (
-                  <div className="ai-prose"><ReactMarkdown components={MARKDOWN_COMPONENTS}>{linkifyInternalPaths(m.content)}</ReactMarkdown></div>
+                  <div className="ai-prose"><ReactMarkdown components={MARKDOWN_COMPONENTS}>{m.role === 'assistant' ? linkifyInternalPaths(m.content) : m.content}</ReactMarkdown></div>
                 )}
               </div>
             ))}

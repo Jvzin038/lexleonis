@@ -65,7 +65,7 @@ export default function SiteHeader() {
       <div className="site-container flex h-16 items-center justify-between gap-2 sm:h-20 sm:gap-4">
         {brand}
 
-        <nav className="hidden items-center gap-1 lg:flex" aria-label="Navegação principal">
+        <nav className="hidden items-center gap-1 xl:flex" aria-label="Navegação principal">
           {navItems.map((item) =>
             item.external ? (
               <a
