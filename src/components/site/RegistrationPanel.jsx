@@ -1,5 +1,5 @@
-import React, { useMemo, useState } from 'react';
-import { Link } from '@/lib/router-compat';
+import React, { useEffect, useMemo, useState } from 'react';
+import { Link, useNavigate } from '@/lib/router-compat';
 import {
   AlertTriangle,
   ArrowLeft,
@@ -62,6 +62,14 @@ export default function RegistrationPanel({ event, ticketTypes, onRegistered }) 
     () => ticketTypes.find((item) => item.id === selectedId) || null,
     [ticketTypes, selectedId],
   );
+
+  const navigate = useNavigate();
+  // Depois do pagamento confirmado, leva o aluno sozinho para os ingressos.
+  useEffect(() => {
+    if (step !== 'done' || !done?.pix_confirmed) return undefined;
+    const timer = setTimeout(() => navigate('/meus-ingressos'), 4000);
+    return () => clearTimeout(timer);
+  }, [step, done, navigate]);
 
   const isClosed = ['cancelled', 'finished', 'sold_out'].includes(event.status);
   const waitlist = event.registration_mode === 'waitlist';
@@ -360,6 +368,11 @@ export default function RegistrationPanel({ event, ticketTypes, onRegistered }) 
           <p className="mt-2 text-sm text-emerald-900/85">
             Pedido: <span className="font-mono font-semibold">{done.order_number}</span>
           </p>
+          {done.pix_confirmed && (
+            <p className="mt-2 flex items-center gap-2 text-sm font-medium text-emerald-900">
+              <Loader2 className="h-4 w-4 animate-spin" /> Levando você para seus ingressos…
+            </p>
+          )}
           <div className="mt-5 flex flex-wrap gap-3">
             <Link to="/meus-ingressos" className="rounded-full bg-brand-deep px-5 py-2.5 text-sm font-semibold text-white">
               Ver meus ingressos
