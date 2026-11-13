@@ -60,7 +60,7 @@ export default function AdminEventos() {
   }));
 
   return (
-    <Tabs defaultValue="eventos">
+    <Tabs defaultValue="eventos" onValueChange={() => loadData()}>
       <TabsList className="flex h-auto w-full flex-wrap justify-start gap-2 bg-transparent p-0">
         <TabsTrigger value="eventos" className={TAB_CLASS}>
           Eventos
@@ -78,6 +78,7 @@ export default function AdminEventos() {
           title="Eventos"
           subtitle="Tudo que for publicado aqui aparece automaticamente na página de eventos e no calendário do site."
           entity="Event"
+          onDataChange={loadData}
           sort="-start_date"
           searchField="title"
           searchPlaceholder="Buscar evento…"
@@ -158,6 +159,7 @@ export default function AdminEventos() {
           title="Lotes de ingressos"
           subtitle="Crie os lotes de cada evento, defina preços, quantidades e a janela de vendas. O ingresso só é emitido após o pagamento confirmado."
           entity="TicketType"
+          onDataChange={loadData}
           sort="order"
           defaults={{ active: true, is_free: false, quantity_sold: 0, max_per_buyer: 4 }}
           transform={(payload) => ({ ...payload, event_title: eventMap[payload.event_id] || payload.event_title || '' })}
@@ -228,6 +230,7 @@ export default function AdminEventos() {
           title="Categorias de eventos"
           subtitle="As categorias criadas aqui aparecem como filtros na página pública de eventos."
           entity="EventCategory"
+          onDataChange={loadData}
           sort="order"
           defaults={{ active: true, color: '#6B16C5' }}
           columns={[
