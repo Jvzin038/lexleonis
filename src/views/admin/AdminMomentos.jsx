@@ -24,7 +24,7 @@ export default function AdminMomentos() {
   const refreshPhotos = useCallback(() => setPhotosVersion((v) => v + 1), []);
 
   return (
-    <Tabs defaultValue="albuns">
+    <Tabs defaultValue="albuns" onValueChange={() => loadAlbums()}>
       <TabsList className="flex h-auto w-full flex-wrap justify-start gap-2 bg-transparent p-0">
         <TabsTrigger
           value="albuns"
@@ -45,6 +45,7 @@ export default function AdminMomentos() {
           title="Álbuns de momentos"
           subtitle="Crie álbuns por evento, escolha a capa e publique. Os álbuns publicados aparecem na página Momentos."
           entity="GalleryAlbum"
+          onDataChange={loadAlbums}
           sort="-album_date"
           searchField="title"
           defaults={{ published: true }}
@@ -75,7 +76,13 @@ export default function AdminMomentos() {
       </TabsContent>
 
       <TabsContent value="fotos" className="mt-8 space-y-8">
-        <BulkPhotoUpload albums={albums} onDone={refreshPhotos} />
+        <BulkPhotoUpload
+          albums={albums}
+          onDone={() => {
+            refreshPhotos();
+            loadAlbums();
+          }}
+        />
         <EntityManager
           key={`photos-${photosVersion}`}
           title="Fotos enviadas"
