@@ -6,7 +6,7 @@ describe("Navegação padrão", () => {
   it("usa os dez caminhos padrão quando a posição não tem itens cadastrados", () => {
     const items = getNavItems([], "main");
 
-    expect(items.map((item) => item.path)).toEqual([
+    expect(items.map((item: { path: string }) => item.path)).toEqual([
       "/",
       "/atletica",
       "/eventos",
