@@ -91,17 +91,31 @@ export async function createAsaasCardPayment(params) {
   if (!value || value <= 0)
     throw new Error("Valor da cobrança inválido.");
   const dueDateStr = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
-  const payment = await asaasRequest("/v3/payments", {
-    method: "POST",
-    body: JSON.stringify({
-      customer: customer.id,
-      billingType: "CREDIT_CARD",
-      value: Number(value.toFixed(2)),
-      dueDate: dueDateStr,
-      description: String(params.description || "").slice(0, 500),
-      externalReference: String(params.registrationId || "")
-    })
-  });
+  const body = {
+    customer: customer.id,
+    billingType: "CREDIT_CARD",
+    value: Number(value.toFixed(2)),
+    dueDate: dueDateStr,
+    description: String(params.description || "").slice(0, 500),
+    externalReference: String(params.registrationId || "")
+  };
+  let payment = null;
+  if (params.successUrl) {
+    // Depois de aprovado, o Asaas leva o comprador de volta ao site. O Asaas só
+    // aceita isso se o domínio do site estiver cadastrado na conta; se recusar,
+    // a cobrança é criada sem o retorno automático.
+    try {
+      payment = await asaasRequest("/v3/payments", {
+        method: "POST",
+        body: JSON.stringify({ ...body, callback: { successUrl: params.successUrl, autoRedirect: true } })
+      });
+    } catch (callbackError) {
+      payment = null;
+    }
+  }
+  if (!payment) {
+    payment = await asaasRequest("/v3/payments", { method: "POST", body: JSON.stringify(body) });
+  }
   return { id: payment.id, invoice_url: payment.invoiceUrl || "" };
 }
 export async function retrieveAsaasPayment(paymentId) {
