@@ -19,7 +19,7 @@ export default async function input_default(req) {
     } catch {
       return Response.json({ error: "JSON inválido." }, { status: 400 });
     }
-    if (!verifyAsaasWebhookOrigin(req, event)) {
+    if (!verifyAsaasWebhookOrigin(req)) {
       return Response.json({ error: "Origem não autorizada." }, { status: 401 });
     }
     const eventType = event.event;
