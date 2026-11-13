@@ -2,13 +2,10 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { verifyAsaasWebhookOrigin } from "@/backend/b44/shared/asaasPix";
 
-const WALLET_PAYLOAD = { account: { id: "wallet-publicada" } };
-
 function requestWithToken(token?: string) {
-  return new Request("https://example.com/api/public/asaas-webhook", {
-    method: "POST",
-    headers: token === undefined ? undefined : { "asaas-access-token": token },
-  });
+  const headers = new Headers();
+  if (token !== undefined) headers.set("asaas-access-token", token);
+  return new Request("https://example.com/api/public/asaas-webhook", { method: "POST", headers });
 }
 
 describe("Validação do webhook do Asaas", () => {
@@ -20,25 +17,25 @@ describe("Validação do webhook do Asaas", () => {
     vi.stubEnv("ASAAS_WEBHOOK_TOKEN", "");
     vi.stubEnv("ASAAS_WALLET_ID", "wallet-publicada");
 
-    expect(verifyAsaasWebhookOrigin(requestWithToken("qualquer"), WALLET_PAYLOAD)).toBe(false);
+    expect(verifyAsaasWebhookOrigin(requestWithToken("qualquer"))).toBe(false);
   });
 
   it("recusa token incorreto mesmo quando a carteira do corpo é igual à configurada", () => {
     vi.stubEnv("ASAAS_WEBHOOK_TOKEN", "token-correto");
     vi.stubEnv("ASAAS_WALLET_ID", "wallet-publicada");
 
-    expect(verifyAsaasWebhookOrigin(requestWithToken("token-errado"), WALLET_PAYLOAD)).toBe(false);
+    expect(verifyAsaasWebhookOrigin(requestWithToken("token-errado"))).toBe(false);
   });
 
   it("recusa uma requisição sem o header asaas-access-token", () => {
     vi.stubEnv("ASAAS_WEBHOOK_TOKEN", "token-correto");
 
-    expect(verifyAsaasWebhookOrigin(requestWithToken(), WALLET_PAYLOAD)).toBe(false);
+    expect(verifyAsaasWebhookOrigin(requestWithToken())).toBe(false);
   });
 
   it("aceita somente o header igual ao ASAAS_WEBHOOK_TOKEN configurado", () => {
     vi.stubEnv("ASAAS_WEBHOOK_TOKEN", "token-correto");
 
-    expect(verifyAsaasWebhookOrigin(requestWithToken("token-correto"), WALLET_PAYLOAD)).toBe(true);
+    expect(verifyAsaasWebhookOrigin(requestWithToken("token-correto"))).toBe(true);
   });
 });
