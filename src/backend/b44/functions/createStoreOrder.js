@@ -173,7 +173,8 @@ export default async function input_default(req) {
           buyerName: user.full_name || "Comprador",
           buyerEmail: user.email || "",
           buyerCpf,
-          buyerPhone: phone
+          buyerPhone: phone,
+          successUrl: `${new URL(req.url).origin}/minha-area`
         });
         await base44.asServiceRole.entities.Order.update(order.id, { asaas_payment_id: card.id });
         return Response.json({
