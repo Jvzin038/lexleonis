@@ -1,6 +1,6 @@
 import { createClientFromRequest } from "../sdk.js";
 import { makeOrderNumber } from "../shared/ticketRules.js";
-import { createAsaasPixPayment, cancelAsaasPayment } from "../shared/asaasPix.js";
+import { createAsaasPixPayment, createAsaasCardPayment, cancelAsaasPayment } from "../shared/asaasPix.js";
 const RESERVATION_MINUTES = 30;
 function onlyDigits(value) {
   return String(value || "").replace(/\D/g, "");
@@ -19,6 +19,7 @@ export default async function input_default(req) {
     const phone = slice(body.phone, 40);
     const note = slice(body.note, 500);
     const buyerCpf = slice(body.buyer_cpf, 20);
+    const paymentMethod = body.payment_method === "card" ? "card" : "pix";
     const fulfillmentMethod = String(body.fulfillment_method || "pickup") === "delivery" ? "delivery" : "pickup";
     const shippingZip = slice(body.shipping_zip, 12);
     const shippingStreet = slice(body.shipping_street, 120);
@@ -148,7 +149,7 @@ export default async function input_default(req) {
       shipping_state: fulfillmentMethod === "delivery" ? shippingState : "",
       status: "awaiting_payment",
       payment_status: "pending",
-      payment_method: "pix",
+      payment_method: paymentMethod,
       payment_provider: "asaas",
       stock_released: false,
       pickup_note: note,
@@ -156,7 +157,7 @@ export default async function input_default(req) {
     });
     const createdItems = await base44.asServiceRole.entities.OrderItem.bulkCreate(items.map((item) => ({ ...item, order_id: order.id, order_number: orderNumber, user_id: user.id })));
     await base44.asServiceRole.entities.AdminLog.create({
-      action: "Pedido da loja registrado pelo site (Pix)",
+      action: `Pedido da loja registrado pelo site (${paymentMethod === "card" ? "cartão" : "Pix"})`,
       module: "Pedidos da loja",
       record_label: orderNumber,
       user_email: user.email || "",
@@ -164,6 +165,27 @@ export default async function input_default(req) {
       details: `${label} — ${fulfillmentMethod === "delivery" ? "Entrega" : "Retirada"}`
     });
     try {
+      if (paymentMethod === "card") {
+        const card = await createAsaasCardPayment({
+          amount: total,
+          registrationId: order.id,
+          description: `Loja Lex Leonis — Pedido ${orderNumber}`,
+          buyerName: user.full_name || "Comprador",
+          buyerEmail: user.email || "",
+          buyerCpf,
+          buyerPhone: phone
+        });
+        await base44.asServiceRole.entities.Order.update(order.id, { asaas_payment_id: card.id });
+        return Response.json({
+          order,
+          items: createdItems,
+          order_number: orderNumber,
+          card: true,
+          invoice_url: card.invoice_url,
+          payment_intent_id: card.id,
+          reservation_expires_at: reservationExpiresAt
+        }, { status: 201 });
+      }
       const pix = await createAsaasPixPayment({
         amount: total,
         registrationId: order.id,
@@ -199,7 +221,7 @@ export default async function input_default(req) {
         payment_status: "cancelled",
         stock_released: true
       });
-      return Response.json({ error: `Não foi possível gerar a cobrança Pix: ${pixError.message}` }, { status: 500 });
+      return Response.json({ error: `Não foi possível gerar a cobrança: ${pixError.message}` }, { status: 500 });
     }
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
