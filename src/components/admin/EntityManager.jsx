@@ -227,6 +227,7 @@ export default function EntityManager({
   rowActions,
   headerExtra,
   transform,
+  onDataChange,
 }) {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);

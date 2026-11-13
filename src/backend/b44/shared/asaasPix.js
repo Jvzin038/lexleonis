@@ -1,3 +1,4 @@
+import { createHash, timingSafeEqual } from "node:crypto";
 import { secrets } from "../sdk.js";
 import { issueTicketsForRegistration, releaseQuantity } from "./ticketIssue.js";
 const ASAAS_API = "https://api.asaas.com";

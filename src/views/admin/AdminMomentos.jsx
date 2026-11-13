@@ -9,12 +9,14 @@ export default function AdminMomentos() {
   const [albums, setAlbums] = useState([]);
   const [photosVersion, setPhotosVersion] = useState(0);
 
-  useEffect(() => {
-    (async () => {
-      const page = await base44.entities.GalleryAlbum.filter({}, { sort: '-album_date', limit: 200 });
-      setAlbums(page?.items || []);
-    })();
+  const loadAlbums = useCallback(async () => {
+    const page = await base44.entities.GalleryAlbum.filter({}, { sort: '-album_date', limit: 200 });
+    setAlbums(page?.items || []);
   }, []);
+
+  useEffect(() => {
+    loadAlbums();
+  }, [loadAlbums]);
 
   const albumOptions = albums.map((album) => ({ value: album.id, label: album.title }));
   const albumMap = albums.reduce((map, album) => ({ ...map, [album.id]: album }), {});
