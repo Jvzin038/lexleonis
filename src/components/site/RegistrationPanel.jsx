@@ -297,6 +297,7 @@ export default function RegistrationPanel({ event, ticketTypes, onRegistered }) 
           pix_qr_code: data.pix_qr_code,
           pix_copy_paste: data.pix_copy_paste,
           pix_expires_at: data.pix_expires_at,
+          reservation_expires_at: data.reservation_expires_at,
         });
         setStep('pix');
       } else {
