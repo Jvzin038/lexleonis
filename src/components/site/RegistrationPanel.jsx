@@ -5,6 +5,7 @@ import {
   ArrowLeft,
   ArrowRight,
   CheckCircle2,
+  CreditCard,
   Loader2,
   ShieldCheck,
   Ticket,
@@ -268,9 +269,11 @@ export default function RegistrationPanel({ event, ticketTypes, onRegistered }) 
     setStep('review');
   };
 
-  const confirm = async () => {
+  const confirm = async (method = 'pix') => {
     setError('');
     setSubmitting(true);
+    // A aba é aberta já no clique para o navegador não bloquear o pop-up.
+    const payWindow = method === 'card' ? window.open('', '_blank') : null;
     try {
       const payload = {
         event_id: event.id,
@@ -280,6 +283,7 @@ export default function RegistrationPanel({ event, ticketTypes, onRegistered }) 
         buyer_email: buyer.email,
         buyer_phone: buyer.phone,
         buyer_cpf: buyer.cpf,
+        payment_method: method,
         participants: participants.map((p) => ({
           name: p.name || '',
           cpf: p.cpf || '',
@@ -291,7 +295,16 @@ export default function RegistrationPanel({ event, ticketTypes, onRegistered }) 
       const data = response.data || {};
       onRegistered?.();
 
-      if (data.pix) {
+      if (data.card) {
+        setRegistrationId(data.order?.id || '');
+        setPixData({
+          invoice_url: data.invoice_url,
+          reservation_expires_at: data.reservation_expires_at,
+        });
+        if (payWindow && data.invoice_url) payWindow.location.href = data.invoice_url;
+        else payWindow?.close();
+        setStep('pix');
+      } else if (data.pix) {
         setRegistrationId(data.order?.id || '');
         setPixData({
           pix_qr_code: data.pix_qr_code,
@@ -305,6 +318,7 @@ export default function RegistrationPanel({ event, ticketTypes, onRegistered }) 
         setStep('done');
       }
     } catch (submitError) {
+      payWindow?.close();
       setError(submitError?.response?.data?.error || 'Não foi possível registrar o pedido agora. Tente novamente.');
     } finally {
       setSubmitting(false);
@@ -424,7 +438,7 @@ export default function RegistrationPanel({ event, ticketTypes, onRegistered }) 
             <span>
               {isFree
                 ? 'Ao confirmar, os ingressos individuais serão emitidos imediatamente com QR Code de entrada.'
-                : 'Ao confirmar, a cobrança Pix será gerada. O ingresso é emitido apenas após a confirmação do pagamento pelo servidor — nunca por clicar em um botão.'}
+                : 'Ao confirmar, a cobrança (Pix ou cartão) será gerada. O ingresso é emitido apenas após a confirmação do pagamento pelo servidor — nunca por clicar em um botão.'}
             </span>
           </div>
 
@@ -432,7 +446,7 @@ export default function RegistrationPanel({ event, ticketTypes, onRegistered }) 
 
           <div className="mt-5 flex flex-wrap gap-3">
             <Button
-              onClick={confirm}
+              onClick={() => confirm('pix')}
               disabled={submitting}
               className="rounded-full bg-brand-gold px-6 text-brand-ink hover:bg-brand-gold/90"
             >
@@ -446,6 +460,16 @@ export default function RegistrationPanel({ event, ticketTypes, onRegistered }) 
                 'Pagar com Pix'
               )}
             </Button>
+            {!isFree && (
+              <Button
+                variant="outline"
+                onClick={() => confirm('card')}
+                disabled={submitting}
+                className="rounded-full border-brand-deep px-6 text-brand-deep"
+              >
+                <CreditCard className="mr-2 h-4 w-4" /> Pagar com cartão
+              </Button>
+            )}
             <Button variant="outline" onClick={() => setStep('participants')} disabled={submitting} className="rounded-full">
               <ArrowLeft className="mr-2 h-4 w-4" /> Voltar e editar
             </Button>
