@@ -1,10 +1,20 @@
 import React, { useEffect, useRef, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { MessageCircle, Send, Square, X } from 'lucide-react';
+import { Link } from '@/lib/router-compat';
+import { isInternalPath, linkifyInternalPaths } from './assistantLinks';
 import { streamAi } from './streamAi';
 
 const WELCOME = { role: 'assistant', content: 'Olá! Sou o **Leão**, assistente da Lex Leonis. Pergunte sobre eventos, ingressos ou a loja.' };
 const SUGGESTIONS = ['Quais são os próximos eventos?', 'Como compro um ingresso?', 'O que tem na loja?'];
+
+function AssistantLink({ href = '', children }) {
+  const className = 'font-medium underline underline-offset-2';
+  if (isInternalPath(href)) return <Link to={href} className={className}>{children}</Link>;
+  return <a href={href} className={className} target="_blank" rel="noreferrer">{children}</a>;
+}
+
+const MARKDOWN_COMPONENTS = { a: AssistantLink };
 
 export default function SiteAssistant() {
   const [open, setOpen] = useState(false);

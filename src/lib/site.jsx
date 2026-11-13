@@ -1,5 +1,6 @@
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { base44 } from '@/api/base44Client';
+import { getNavItems } from '@/lib/navigation';
 
 export const DEFAULT_SETTINGS = {
   site_name: 'Atlética Lex Leonis',
