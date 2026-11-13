@@ -32,6 +32,34 @@ const RESULT_STYLES = {
   error: 'border-red-300 bg-red-50 text-red-800',
 };
 
+function maskCpf(value) {
+  const digits = String(value || '').replace(/\D/g, '');
+  if (digits.length === 11) return `***.${digits.slice(3, 6)}.${digits.slice(6, 9)}-**`;
+  if (digits.length > 4) return `${'*'.repeat(digits.length - 4)}${digits.slice(-4)}`;
+  return digits ? '***' : '';
+}
+
+const RESULT_LABELS = {
+  ok: 'Liberado',
+  duplicate: 'Já utilizado',
+  invalid: 'Inválido',
+  cancelled: 'Cancelado',
+  refunded: 'Reembolsado',
+  expired: 'Expirado',
+  wrong_event: 'Outro evento',
+  not_paid: 'Não pago',
+  not_open: 'Entrada ainda não aberta',
+  error: 'Erro',
+};
+
+const PAYMENT_LABELS = {
+  confirmed: 'Confirmado',
+  pending: 'Pendente',
+  not_required: 'Sem cobrança',
+  cancelled: 'Cancelado',
+  refunded: 'Reembolsado',
+};
+
 function Stat({ label, value, tone = 'default' }) {
   const tones = {
     default: 'bg-white',
@@ -383,7 +411,7 @@ export default function AdminCheckin() {
                             {result.ticket.participant_cpf && (
                               <div className="flex gap-2">
                                 <dt className="text-slate-500">CPF:</dt>
-                                <dd>{result.ticket.participant_cpf}</dd>
+                                <dd>{maskCpf(result.ticket.participant_cpf)}</dd>
                               </div>
                             )}
                             <div className="flex gap-2">
@@ -400,7 +428,7 @@ export default function AdminCheckin() {
                             </div>
                             <div className="flex gap-2">
                               <dt className="text-slate-500">Pagamento:</dt>
-                              <dd>{TICKET_STATE[result.ticket.payment_status] || result.ticket.payment_status || '—'}</dd>
+                              <dd>{PAYMENT_LABELS[result.ticket.payment_status] || TICKET_STATE[result.ticket.payment_status] || result.ticket.payment_status || '—'}</dd>
                             </div>
                             {result.ticket.checked_in_at && (
                               <div className="flex gap-2">
@@ -477,8 +505,7 @@ export default function AdminCheckin() {
                           <span className="font-mono text-xs">{entry.ticket_code}</span>
                           <span className="text-xs text-slate-600">{entry.holder_name || '—'}</span>
                           <span className="text-xs text-slate-500">
-                            {TICKET_STATE[entry.result] || entry.result}
-                            {entry.result === 'ok' ? ' · liberado' : ''}
+                            {RESULT_LABELS[entry.result] || TICKET_STATE[entry.result] || entry.result}
                           </span>
                           <span className="text-xs text-slate-400">
                             {new Date(entry.created_date).toLocaleTimeString('pt-BR', {
