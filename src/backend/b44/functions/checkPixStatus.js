@@ -10,6 +10,7 @@ import {
 } from "../shared/asaasPix.js";
 import { releaseQuantity } from "../shared/ticketIssue.js";
 import { todayInSaoPaulo } from "../shared/ticketRules.js";
+import { decryptCpf } from "../shared/cpfCrypto.js";
 const RESERVATION_MINUTES = 30;
 async function releaseOrderStock(base44, order) {
   if (order.stock_released === true)
@@ -42,7 +43,7 @@ async function handleStoreOrder(base44, user, body, action, orderId) {
       return Response.json({ error: "O prazo do pedido expirou. Inicie uma nova compra." }, { status: 409 });
     }
     const amount = Number(order.total_amount);
-    const buyerCpf = order.buyer_cpf || "";
+    const buyerCpf = decryptCpf(order.buyer_cpf || "");
     const buyerPhone = order.contact_phone || "";
     if (order.asaas_payment_id) {
       await cancelAsaasPayment(order.asaas_payment_id);
@@ -183,7 +184,7 @@ export default async function input_default(req) {
       const amount = Number(registration.total_amount);
       const buyerName = registration.participants?.[0]?.name || registration.user_name || "Comprador";
       const buyerEmail = registration.participants?.[0]?.email || registration.user_email || "";
-      const buyerCpf = registration.buyer_cpf || registration.participants?.[0]?.cpf || "";
+      const buyerCpf = decryptCpf(registration.buyer_cpf || registration.participants?.[0]?.cpf || "");
       const buyerPhone = registration.user_phone || registration.participants?.[0]?.phone || "";
       if (registration.asaas_payment_id) {
         await cancelAsaasPayment(registration.asaas_payment_id);
