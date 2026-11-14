@@ -10,13 +10,25 @@ export default function TicketQrCode({ code, size = 220, className = '' }) {
     if (!code) return undefined;
     setState({ loading: true, rows: [], error: '' });
     (async () => {
+      // O QR Code fica salvo no aparelho para abrir na entrada mesmo sem sinal.
+      const offlineKey = `lexleonis-offline-qr-${code}`;
       try {
         const response = await base44.functions.invoke('ticketQr', { code });
         if (!active) return;
-        setState({ loading: false, rows: response.data?.rows || [], error: '' });
+        const rows = response.data?.rows || [];
+        if (rows.length) {
+          try { localStorage.setItem(offlineKey, JSON.stringify(rows)); } catch { /* ignore */ }
+        }
+        setState({ loading: false, rows, error: '' });
       } catch (error) {
+        let saved = [];
+        try { saved = JSON.parse(localStorage.getItem(offlineKey) || '[]'); } catch { /* ignore */ }
         if (active) {
-          setState({ loading: false, rows: [], error: 'Não foi possível carregar o QR Code.' });
+          setState({
+            loading: false,
+            rows: saved,
+            error: saved.length ? '' : 'Sem internet: abra este ingresso uma vez com conexão para salvar o QR Code.',
+          });
         }
       }
     })();
