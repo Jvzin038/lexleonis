@@ -114,7 +114,7 @@ export const base44 = {
       const patch = { data: { ...(cur?.data || {}), ...rest } };
       if (full_name !== undefined) patch.full_name = full_name;
       if (phone !== undefined) patch.phone = phone;
-      if (cpf !== undefined) patch.cpf = cpf;
+      // O CPF só é gravado pelo servidor, que o criptografa antes de salvar.
       if (course !== undefined) patch.course = course;
       const { error } = await supabase.from('profiles').update(patch).eq('id', user.id);
       if (error) throw authError(error, 'Não foi possível salvar.');
