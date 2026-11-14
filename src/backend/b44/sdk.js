@@ -1,6 +1,7 @@
 // Server-side stand-in for the Base44 SDK used by the ported backend actions.
 // Data access runs with the service role; the caller identity is resolved by the dispatcher.
 import { ENTITY_TABLES, createEntity } from '../../lib/entity-core.js';
+import { encryptCpf } from './shared/cpfCrypto.js';
 
 const contextByRequest = new WeakMap();
 
@@ -56,7 +57,7 @@ function userEntity(admin) {
       const patch = {};
       if (full_name !== undefined) patch.full_name = full_name;
       if (phone !== undefined) patch.phone = phone;
-      if (cpf !== undefined) patch.cpf = cpf;
+      if (cpf !== undefined) patch.cpf = encryptCpf(cpf);
       if (course !== undefined) patch.course = course;
       if (Object.keys(rest).length) {
         const { data: cur } = await admin.from('profiles').select('data').eq('id', id).maybeSingle();
@@ -87,7 +88,7 @@ export function createClientFromRequest(req) {
   return {
     auth: { me: async () => user },
     entities,
-    asServiceRole: { entities },
+    asServiceRole: { entities, db: admin },
     users: {
       async inviteUser(email, _role) {
         const origin = ctx.origin || '';
