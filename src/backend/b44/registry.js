@@ -5,6 +5,7 @@ import checkinTicket from './functions/checkinTicket.js';
 import cleanupInvites from './functions/cleanupInvites.js';
 import createStoreOrder from './functions/createStoreOrder.js';
 import createTicketOrder from './functions/createTicketOrder.js';
+import encryptStoredCpfs from './functions/encryptStoredCpfs.js';
 import evaluateBatches from './functions/evaluateBatches.js';
 import expireTickets from './functions/expireTickets.js';
 import gateStats from './functions/gateStats.js';
@@ -18,6 +19,6 @@ import ticketQr from './functions/ticketQr.js';
 
 export const FUNCTIONS = {
   asaasWebhook, cancelRegistration, checkPixStatus, checkinTicket, cleanupInvites, createStoreOrder,
-  createTicketOrder, evaluateBatches, expireTickets, gateStats, issueTickets, issuedTickets, staffAccess,
+  createTicketOrder, encryptStoredCpfs, evaluateBatches, expireTickets, gateStats, issueTickets, issuedTickets, staffAccess,
   staffData, storeOrderActions, ticketOrderActions, ticketQr,
 };
