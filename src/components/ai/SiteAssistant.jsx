@@ -39,7 +39,7 @@ export default function SiteAssistant() {
     abortRef.current = ctrl;
     const update = (content, extra = {}) => setMessages((m) => [...m.slice(0, -1), { role: 'assistant', content, ...extra }]);
     try {
-      const final = await streamAi({ mode: 'assistant', messages: history }, { signal: ctrl.signal, onText: (t) => update(t, { pending: true }) });
+      const final = await streamAi({ mode: 'assistant', messages: history }, { auth: true, signal: ctrl.signal, onText: (t) => update(t, { pending: true }) });
       update(final || 'Não consegui responder agora.');
     } catch (error) {
       if (ctrl.signal.aborted) setMessages((m) => { const last = m[m.length - 1]; return [...m.slice(0, -1), { role: 'assistant', content: (last.content || '') + '\n\n_Resposta interrompida._' }]; });

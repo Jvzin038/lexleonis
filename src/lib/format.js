@@ -113,7 +113,12 @@ export function downloadTextFile(filename, content, mime = 'text/plain;charset=u
 }
 
 export function toCsv(rows, headers) {
-  const escape = (value) => `"${String(value ?? '').replace(/"/g, '""')}"`;
+  const escape = (value) => {
+    let text = String(value ?? '');
+    // Neutralize spreadsheet formulas (=, +, -, @, tab, CR) from user-supplied values.
+    if (typeof value === 'string' && /^[=+\-@\t\r]/.test(text)) text = `'${text}`;
+    return `"${text.replace(/"/g, '""')}"`;
+  };
   const lines = [headers.map((h) => escape(h.label)).join(';')];
   rows.forEach((row) => {
     lines.push(headers.map((h) => escape(typeof h.value === 'function' ? h.value(row) : row[h.value])).join(';'));

@@ -1,5 +1,6 @@
 import { createClientFromRequest } from "../sdk.js";
 import { evaluateEventBatches } from "../shared/batchRotation.js";
+import { requirePermission } from "../shared/staffAuth.js";
 export default async function input_default(req) {
   try {
     const base44 = createClientFromRequest(req);
@@ -27,6 +28,9 @@ export default async function input_default(req) {
     if (action === "manual") {
       if (!user)
         return Response.json({ error: "Entre na sua conta." }, { status: 401 });
+      const access = await requirePermission(base44, user, "ingressos");
+      if (!access.ok)
+        return Response.json({ error: "Sua conta não tem permissão para alterar lotes." }, { status: 403 });
       const batchId = String(body.batch_id || "").trim();
       if (!batchId)
         return Response.json({ error: "Informe o lote." }, { status: 400 });
