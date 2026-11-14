@@ -33,7 +33,11 @@ const RESULT_STYLES = {
 };
 
 function maskCpf(value) {
-  const digits = String(value || '').replace(/\D/g, '');
+  const text = String(value || '');
+  // CPF criptografado no banco: o trecho mascarado vem junto (enc:v1:<máscara>:...).
+  if (text.startsWith('enc:')) return text.split(':')[2] || '***';
+  if (text.includes('*')) return text;
+  const digits = text.replace(/\D/g, '');
   if (digits.length === 11) return `***.${digits.slice(3, 6)}.${digits.slice(6, 9)}-**`;
   if (digits.length > 4) return `${'*'.repeat(digits.length - 4)}${digits.slice(-4)}`;
   return digits ? '***' : '';
