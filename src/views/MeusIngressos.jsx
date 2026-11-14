@@ -39,7 +39,12 @@ export default function MeusIngressos() {
   const { items, loading } = useCollection(
     'Ticket',
     userId ? active.query(userId) : { user_id: '__none__' },
-    { sort: '-issued_at', limit: 60, enabled: Boolean(userId) },
+    {
+      sort: '-issued_at',
+      limit: 60,
+      enabled: Boolean(userId),
+      offlineKey: userId ? `lexleonis-offline-tickets-${userId}-${tab}` : undefined,
+    },
   );
 
   return (
