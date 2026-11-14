@@ -27,11 +27,14 @@ export const claimLegacyAccount = createServerFn({ method: "POST" })
     if (legacy.role === "admin") {
       await supabaseAdmin.from("user_roles").upsert({ user_id: newId, role: "admin" }, { onConflict: "user_id,role" });
     }
+    const { encryptCpf } = await import("./b44/shared/cpfCrypto.js");
     const extra = ((legacy.data as Record<string, unknown>) || {}) as Record<string, string | undefined>;
-    const patch: { full_name?: string; phone?: string; cpf?: string; course?: string; data: Record<string, unknown> } = { data: extra };
+    // O CPF vai criptografado para a coluna própria e não fica aberto no campo data.
+    const { cpf: legacyCpf, ...extraWithoutCpf } = extra;
+    const patch: { full_name?: string; phone?: string; cpf?: string; course?: string; data: Record<string, unknown> } = { data: extraWithoutCpf };
     if (legacy.full_name) patch.full_name = legacy.full_name;
     if (extra["phone"]) patch.phone = extra["phone"];
-    if (extra["cpf"]) patch.cpf = extra["cpf"];
+    if (legacyCpf) patch.cpf = encryptCpf(legacyCpf);
     if (extra["course"]) patch.course = extra["course"];
     await supabaseAdmin.from("profiles").update(patch as never).eq("id", newId);
     await supabaseAdmin
