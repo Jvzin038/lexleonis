@@ -9,6 +9,7 @@ import { issueTicketsForRegistration, reserveQuantity, releaseQuantity } from ".
 import { uniqueTicketCode } from "../shared/staffAuth.js";
 import { createAsaasPixPayment, createAsaasCardPayment } from "../shared/asaasPix.js";
 import { evaluateEventBatches } from "../shared/batchRotation.js";
+import { encryptCpf } from "../shared/cpfCrypto.js";
 function onlyDigits(value) {
   return String(value || "").replace(/\D/g, "");
 }
@@ -159,10 +160,10 @@ export default async function input_default(req) {
       user_email: buyerEmail || user.email || "",
       user_name: buyerName || user.full_name || "",
       user_phone: buyerPhone,
-      buyer_cpf: buyerCpf,
+      buyer_cpf: encryptCpf(buyerCpf),
       participants: participants.map((p) => ({
         name: String(p.name || "").slice(0, 200),
-        cpf: String(p.cpf || "").slice(0, 20),
+        cpf: encryptCpf(String(p.cpf || "").slice(0, 20)),
         email: String(p.email || "").slice(0, 200),
         phone: String(p.phone || "").slice(0, 40)
       })),
