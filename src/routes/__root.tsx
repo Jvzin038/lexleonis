@@ -138,6 +138,20 @@ function RootShell({ children }: { children: ReactNode }) {
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
+  // Guarda o site no aparelho para abrir sem internet. Fica desligado na prévia
+  // do editor, para não servir versões antigas enquanto o site é editado.
+  useEffect(() => {
+    if (!("serviceWorker" in navigator)) return;
+    const host = window.location.hostname;
+    const isEditorPreview =
+      host === "localhost" ||
+      host.startsWith("id-preview--") ||
+      host.endsWith("lovableproject.com") ||
+      host.endsWith("lovable.dev");
+    if (isEditorPreview) return;
+    navigator.serviceWorker.register("/sw.js").catch(() => {});
+  }, []);
+
   return (
     <QueryClientProvider client={queryClient}>
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
