@@ -5,7 +5,7 @@ import { z } from "zod";
 // Runs one of the app's backend actions (ported from the original project).
 // The caller may be signed out: each action checks permissions itself.
 export const invokeAction = createServerFn({ method: "POST" })
-  .inputValidator((input: unknown) =>
+  .validator((input: unknown) =>
     z.object({ name: z.string().min(1).max(64), payload: z.any().optional() }).parse(input),
   )
   .handler(async ({ data }) => {
