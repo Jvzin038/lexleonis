@@ -1,5 +1,6 @@
 import { createClientFromRequest } from "../sdk.js";
 import { makeOrderNumber } from "../shared/ticketRules.js";
+import { encryptCpf } from "../shared/cpfCrypto.js";
 import { createAsaasPixPayment, createAsaasCardPayment, cancelAsaasPayment } from "../shared/asaasPix.js";
 const RESERVATION_MINUTES = 30;
 function onlyDigits(value) {
@@ -135,7 +136,7 @@ export default async function input_default(req) {
       user_name: user.full_name || "",
       user_email: user.email || "",
       contact_phone: phone,
-      buyer_cpf: buyerCpf,
+      buyer_cpf: encryptCpf(buyerCpf),
       items_label: label,
       items_count: items.reduce((sum, item) => sum + item.quantity, 0),
       total_amount: total,
