@@ -20,7 +20,7 @@ export default function OfflineNotice() {
   return (
     <div className="sticky top-0 z-40 flex items-center justify-center gap-2 bg-brand-deep px-4 py-2 text-center text-xs font-medium text-brand-gold">
       <WifiOff className="h-3.5 w-3.5 shrink-0" />
-      Você está sem internet — mostrando o conteúdo já salvo no aparelho.
+      Você está sem internet. Páginas já abertas e seus ingressos salvos continuam disponíveis.
     </div>
   );
 }
