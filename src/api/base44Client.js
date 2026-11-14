@@ -8,8 +8,36 @@ import { claimLegacyAccount } from '@/backend/account.functions';
 
 let claimed = false;
 
+// Sem internet, o aluno continua "logado" com os dados da última visita, para
+// conseguir abrir os ingressos salvos. CPF e telefone não ficam nessa cópia.
+const OFFLINE_PREFIX = 'lexleonis-offline-';
+const OFFLINE_USER_KEY = `${OFFLINE_PREFIX}user`;
+
+function isOffline() {
+  return typeof navigator !== 'undefined' && navigator.onLine === false;
+}
+
+async function offlineUser() {
+  try {
+    const { data } = await supabase.auth.getSession();
+    const cached = JSON.parse(localStorage.getItem(OFFLINE_USER_KEY) || 'null');
+    if (data?.session?.user && cached && cached.id === data.session.user.id) return cached;
+  } catch { /* sem cópia salva */ }
+  return null;
+}
+
+function clearOfflineData() {
+  try {
+    Object.keys(localStorage)
+      .filter((key) => key.startsWith(OFFLINE_PREFIX))
+      .forEach((key) => localStorage.removeItem(key));
+  } catch { /* ignore */ }
+}
+
 async function currentUser() {
-  const { data: { user } } = await supabase.auth.getUser();
+  if (isOffline()) return offlineUser();
+  const { data: { user }, error: userError } = await supabase.auth.getUser();
+  if (!user && userError && (isOffline() || userError.name === 'AuthRetryableFetchError')) return offlineUser();
   if (!user) return null;
   if (!claimed && user.email_confirmed_at) {
     claimed = true;
@@ -19,7 +47,7 @@ async function currentUser() {
     supabase.from('profiles').select('*').eq('id', user.id).maybeSingle(),
     supabase.from('user_roles').select('role').eq('user_id', user.id),
   ]);
-  return {
+  const result = {
     ...(profile?.data || {}),
     id: user.id,
     email: (user.email || '').toLowerCase(),
@@ -30,6 +58,10 @@ async function currentUser() {
     role: (roles || []).some((r) => r.role === 'admin') ? 'admin' : 'user',
     created_date: user.created_at,
   };
+  try {
+    localStorage.setItem(OFFLINE_USER_KEY, JSON.stringify({ ...result, cpf: '', phone: '' }));
+  } catch { /* armazenamento indisponível */ }
+  return result;
 }
 
 function authError(error, fallback) {
@@ -129,6 +161,7 @@ export const base44 = {
     setToken() { /* sessions are managed automatically */ },
     async logout(redirectUrl) {
       await supabase.auth.signOut();
+      clearOfflineData();
       claimed = false;
       if (redirectUrl) window.location.href = '/';
     },
