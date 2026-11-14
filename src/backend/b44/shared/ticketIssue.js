@@ -1,5 +1,6 @@
 import { eventWindow, toIso } from "./ticketRules.js";
 import { uniqueTicketCode } from "./staffAuth.js";
+import { maskCpf } from "./cpfCrypto.js";
 export async function fetchSettings(base44) {
   try {
     const page = await base44.asServiceRole.entities.SiteSettings.list({ sort: "-updated_date", limit: 1 });
@@ -63,7 +64,7 @@ export async function issueTicketsForRegistration(base44, registration, options 
       user_id: registration.user_id,
       holder_name: participant.name || registration.user_name || "",
       participant_name: participant.name || "",
-      participant_cpf: participant.cpf || "",
+      participant_cpf: maskCpf(participant.cpf),
       participant_email: participant.email || "",
       participant_phone: participant.phone || "",
       ticket_type_name: registration.ticket_type_name || "",
