@@ -483,3 +483,6 @@ body::before {
 .ai-prose ol { list-style: decimal; padding-left: 1.25em; }
 .ai-prose a { color: var(--color-brand-primary); text-decoration: underline; }
 .ai-prose strong { font-weight: 700; }
+
+/* Esconde o selo flutuante "Edit with Lovable" no site publicado (plano Pro). */
+#lovable-badge { display: none !important; }
