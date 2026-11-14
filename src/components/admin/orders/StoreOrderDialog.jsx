@@ -1,6 +1,17 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { AlertTriangle, Ban, CheckCircle2, Loader2, MessageCircle } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
+
+function maskCpf(value) {
+  const text = String(value || '');
+  // CPF criptografado no banco: o trecho mascarado vem junto (enc:v1:<máscara>:...).
+  if (text.startsWith('enc:')) return text.split(':')[2] || '***';
+  if (text.includes('*')) return text;
+  const digits = text.replace(/\D/g, '');
+  if (digits.length === 11) return `***.${digits.slice(3, 6)}.${digits.slice(6, 9)}-**`;
+  if (digits.length > 4) return `${'*'.repeat(digits.length - 4)}${digits.slice(-4)}`;
+  return digits ? '***' : '';
+}
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
@@ -170,7 +181,7 @@ export default function StoreOrderDialog({ orderId, onClose, onChanged }) {
                 </div>
               )}
               {order.buyer_cpf && (
-                <p className="mt-2 text-xs text-slate-500">CPF/CNPJ: {order.buyer_cpf}</p>
+                <p className="mt-2 text-xs text-slate-500">CPF/CNPJ: {maskCpf(order.buyer_cpf)}</p>
               )}
             </div>
 
